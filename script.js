@@ -13,7 +13,25 @@ const cartSubtotalEl = document.getElementById("cartSubtotal");
 const cartCountEl = document.getElementById("cartCount");
 const addToCartBtn = document.querySelector(".product-add-btn");
 
-const cart = [];
+// Cart backed by sessionStorage so items persist across page navigations
+const CART_KEY = "keystone_cart";
+
+function loadCart() {
+  try {
+    const raw = sessionStorage.getItem(CART_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveCart() {
+  try {
+    sessionStorage.setItem(CART_KEY, JSON.stringify(cart));
+  } catch {}
+}
+
+const cart = loadCart();
 
 function formatMoney(value) {
   return `$${value.toFixed(2)}`;
@@ -73,6 +91,7 @@ function addToCart(product) {
   if (existing) existing.quantity += 1;
   else cart.push({ ...product, quantity: 1 });
 
+  saveCart();
   renderCart();
   openCart();
 }
@@ -108,7 +127,6 @@ function openCart() {
   cartToggle.setAttribute("aria-expanded", "true");
   cartOverlay.hidden = false;
 
-  // Hide banner whenever the cart drawer is open
   hideBanner();
 }
 
@@ -120,7 +138,6 @@ function closeCart() {
   cartToggle.setAttribute("aria-expanded", "false");
   cartOverlay.hidden = true;
 
-  // Show banner when cart is closed
   showBanner();
 }
 
@@ -172,23 +189,42 @@ cartItemsEl?.addEventListener("click", (e) => {
     cart.splice(index, 1);
   }
 
+  saveCart();
   renderCart();
   openCart();
 });
 
-// Keep banner visible when Add to Cart is pressed (until cart actually opens from that action)
 if (addToCartBtn) {
   addToCartBtn.addEventListener("click", () => {
     showBanner();
 
     const title = document.querySelector(".product-title")?.textContent.trim() || "Product";
-    const priceText = document.querySelector(".product-price-inline")?.textContent.trim() || "$9.99";
-    const price = Number(priceText.replace("$", "").replace(",", ""));
+    const priceText =
+      document.querySelector(".purchase-card-price")?.textContent.trim() ||
+      document.querySelector(".product-price-inline")?.textContent.trim() ||
+      "$9.99";
+    const price = Number(priceText.replace(/[^0-9.]/g, "")) || 9.99;
     const image = document.querySelector(".product-media img")?.src || "";
 
     addToCart({ name: title, price, size: "12 oz", image });
   });
 }
+
+// Checkout navigates to the dedicated, fully themed checkout page rather than
+// opening an in-page overlay.
+function startCheckout() {
+  if (cart.length === 0) return;
+  closeCart();
+  window.location.href = "checkout.html";
+}
+
+// Wire up all Checkout buttons (inside cart drawer footer)
+document.addEventListener("click", (e) => {
+  if (e.target.closest(".checkout-btn")) {
+    e.stopPropagation();
+    startCheckout();
+  }
+});
 
 /* Slow top->bottom cascade on all pages */
 window.addEventListener("DOMContentLoaded", () => {
