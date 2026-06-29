@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guatemala Antigua | Keystone Coffee</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header banner">
+    <div class="container topbar">
+      <div class="brand">
+        <a class="brand-text" href="index.html"><strong>Keystone Coffee</strong></a>
+      </div>
+
+      <div class="nav-wrap">
+        <button class="cart-toggle" id="cartToggle" aria-expanded="false" aria-controls="cartDrawer" aria-label="Open cart">
+          <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/Shopping%20Cart.png" alt="" aria-hidden="true" class="cart-icon" />
+          <span class="cart-count" id="cartCount" hidden>0</span>
+        </button>
+
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu">
+          <svg class="nav-icon" width="120" height="120" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M30 20 L70 20 L62 80 L38 80 Z" fill="white" />
+          </svg>
+        </button>
+        <nav id="mainNav" class="nav-menu">
+          <a href="index.html#featured-coffee">Shop</a>
+          <a href="index.html#table-talk">Table Talk</a>
+          <a href="index.html#about-us">About Us</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="cart-overlay" id="cartOverlay" hidden></div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title-wrap">
+        <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/Shopping%20Cart.png" alt="" aria-hidden="true" class="cart-drawer-icon" />
+        <h2>My Cart</h2>
+      </div>
+      <button class="cart-close" id="cartClose" aria-label="Close cart">×</button>
+    </div>
+    <div class="cart-drawer-body" id="cartItems"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal-row">
+        <div class="cart-subtotal-label">SUBTOTAL</div>
+        <div class="cart-subtotal-amount" id="cartSubtotal">$0.00</div>
+      </div>
+      <button type="button" class="checkout-btn">Checkout</button>
+    </div>
+  </aside>
+
+  <main class="product-page">
+    <div class="product-page-inner">
+      <div class="product-layout">
+        <div class="product-media">
+          <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png" alt="Guatemala Antigua" />
+        </div>
+
+        <div class="product-info">
+          <div class="product-origincat">GUATEMALA / SINGLE ORIGIN</div>
+          <h1 class="product-title">Guatemala Antigua</h1>
+          <p class="product-description">Deep, structured, and aromatic with notes of spice and dark chocolate. Crafted for those who enjoy a grounded and contemplative brew.</p>
+          <p class="product-price-inline">$9.99</p>
+          <button class="product-add-btn" type="button">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
