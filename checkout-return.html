@@ -34,14 +34,14 @@
 
     .return-card h1 {
       color: rgba(217, 158, 84, 1);
-      font-family: serif;
+      font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
       font-size: 2.2rem;
       margin: 0 0 16px;
     }
 
     .return-card p {
       color: rgb(247, 244, 239);
-      font-family: serif;
+      font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
       font-size: 1.05rem;
       line-height: 1.7;
       margin: 0 0 12px;
@@ -80,7 +80,7 @@
       padding: 14px 28px;
       background: rgba(217, 158, 84, 1);
       color: rgb(110, 67, 77);
-      font-family: serif;
+      font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
       font-size: 1.05rem;
       font-weight: 700;
       border-radius: 8px;
@@ -120,6 +120,10 @@
 
   <script>
     const CART_KEY = 'keystone_cart';
+
+    function escapeHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
 
     async function checkSession() {
       const params = new URLSearchParams(window.location.search);
@@ -185,10 +189,6 @@
           <a href="index.html" class="btn-primary">Return to Shop</a>
         </div>
       `;
-    }
-
-    function escapeHtml(str) {
-      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
     checkSession();
