@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | Keystone Coffee</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header banner">
+    <div class="container topbar">
+      <div class="brand">
+        <a class="brand-text" href="index.html"><strong>Keystone Coffee</strong></a>
+      </div>
+      <div class="nav-wrap">
+        <button class="cart-toggle" id="cartToggle" aria-expanded="false" aria-controls="cartDrawer" aria-label="Open cart">
+          <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/Shopping%20Cart.png" alt="" aria-hidden="true" class="cart-icon" />
+          <span class="cart-count" id="cartCount" hidden>0</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu">
+          <svg class="nav-icon" width="120" height="120" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M30 20 L70 20 L62 80 L38 80 Z" fill="white" />
+          </svg>
+        </button>
+        <nav id="mainNav" class="nav-menu">
+          <a href="index.html#featured-coffee">Shop</a>
+          <a href="table-talk.html">Table Talk</a>
+          <a href="about-us.html">About Us</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="cart-overlay" id="cartOverlay" hidden></div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title-wrap">
+        <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/Shopping%20Cart.png" alt="" aria-hidden="true" class="cart-drawer-icon" />
+        <h2>My Cart</h2>
+      </div>
+      <button class="cart-close" id="cartClose" aria-label="Close cart">×</button>
+    </div>
+    <div class="cart-drawer-body" id="cartItems"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal-row">
+        <div class="cart-subtotal-label">SUBTOTAL</div>
+        <div class="cart-subtotal-amount" id="cartSubtotal">$0.00</div>
+      </div>
+      <button type="button" class="checkout-btn">Checkout</button>
+    </div>
+  </aside>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-content">
+        <h1>Our Story</h1>
+      </div>
+    </section>
+
+    <section class="section about-section">
+      <div class="container">
+        <h2>About Keystone Coffee</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <h3>Caffeine for Kings</h3>
+            <p>
+              Keystone Coffee is in the business of equipping Christians to fight the good fight, build to last, and conquer the world for Christ's Kingdom and glory. We believe that coffee is more than just a beverage—it's a catalyst for meaningful conversation, deep work, and spiritual growth.
+            </p>
+            <p>
+              Our mission is to provide premium, ethically sourced coffee to Christian men who are passionate about their faith, their families, and their impact on the world. Every bag of Keystone Coffee represents a commitment to excellence and a dedication to the Kingdom.
+            </p>
+          </div>
+          <div class="about-text">
+            <h3>Our Values</h3>
+            <ul class="values-list">
+              <li><strong>Kingdom First:</strong> Everything we do points back to Christ and His Kingdom.</li>
+              <li><strong>Quality:</strong> We source only the finest, single-origin coffee beans from around the world.</li>
+              <li><strong>Community:</strong> We believe in building strong communities of Christian men who support and strengthen one another.</li>
+              <li><strong>Integrity:</strong> We operate with honesty, transparency, and biblical principles in all our dealings.</li>
+              <li><strong>Excellence:</strong> We pursue excellence in every aspect of our business as an act of worship.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="company-summary">
+      <div class="container summary-inner">
+        <h3>Our Roasting Process</h3>
+        <p>
+          We work directly with farmers and cooperatives to ensure that every batch of coffee meets our rigorous standards for quality and sustainability. Our small-batch roasting process brings out the unique characteristics of each origin, delivering a cup that's bold, complex, and deeply satisfying.
+        </p>
+      </div>
+    </section>
+
+    <section class="section team-section">
+      <div class="container">
+        <h2>Meet the Team</h2>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-image">👨‍💼</div>
+            <h3>John Smith</h3>
+            <p class="team-role">Founder & CEO</p>
+            <p>A passionate coffee enthusiast and Christian businessman dedicated to building a company that glorifies God.</p>
+          </div>
+          <div class="team-card">
+            <div class="team-image">👨‍🍳</div>
+            <h3>Michael Johnson</h3>
+            <p class="team-role">Master Roaster</p>
+            <p>With over 15 years of roasting experience, Michael crafts each batch with precision and care.</p>
+          </div>
+          <div class="team-card">
+            <div class="team-image">👨‍💻</div>
+            <h3>David Wilson</h3>
+            <p class="team-role">Operations Manager</p>
+            <p>David ensures every order is fulfilled with excellence and every customer experience is exceptional.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section">
+      <div class="container contact-inner">
+        <h2>Get in Touch</h2>
+        <div class="contact-grid">
+          <div class="contact-item">
+            <h3>Phone</h3>
+            <p>(555) 123-4567</p>
+          </div>
+          <div class="contact-item">
+            <h3>Email</h3>
+            <p>hello@keystonecoffee.com</p>
+          </div>
+          <div class="contact-item">
+            <h3>Business Address</h3>
+            <p>123 Main Street, Hometown, USA</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
