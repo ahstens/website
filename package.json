@@ -1,8 +1,9 @@
 {
-  "name": "website",
+  "name": "keystone-coffee",
   "version": "1.0.0",
   "private": true,
+  "description": "Keystone Coffee storefront with Stripe payment integration",
   "dependencies": {
-    "stripe": "^12.0.0"
+    "stripe": "^17.0.0"
   }
 }
