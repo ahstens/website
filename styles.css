@@ -684,7 +684,11 @@ footer { padding: 24px 0; }
 }
 
 @media (max-width: 480px) {
-  :root { --mobile-header-offset: 88px; }
+  :root {
+    --mobile-header-offset: 88px;
+    --mobile-nav-border-offset: 2px;
+    --mobile-nav-inline-gutter: 14px;
+  }
   body { padding-top: var(--mobile-header-offset); }
   .container { padding: 0 14px; }
   .topbar { gap: 8px; }
@@ -693,7 +697,7 @@ footer { padding: 24px 0; }
   .cart-icon { width: 30px; height: 30px; }
   .nav-toggle { width: 64px; height: 48px; }
   .nav-icon { width: 68px; height: 44px; }
-  .nav-menu { top: calc(var(--mobile-header-offset) - 2px); min-width: min(220px, calc(100vw - 28px)); }
+  .nav-menu { top: calc(var(--mobile-header-offset) - var(--mobile-nav-border-offset)); min-width: min(220px, calc(100vw - (var(--mobile-nav-inline-gutter) * 2))); }
   .social-links a, .newsletter-form button { width: 100%; min-height: 46px; justify-content: center; }
   .qty-btn { width: 44px; height: 44px; }
   .qty-value { min-width: 40px; }
