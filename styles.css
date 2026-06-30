@@ -1,16 +1,7 @@
+@import url("https://use.typekit.net/aaz8cqv.css");
+
 *, *::before, *::after { box-sizing: border-box; }
 img, video, iframe { max-width: 100%; height: auto; }
-
-@font-face {
-  font-family: adobe-caslon-pro;
-  src: url(https://use.typekit.net/af/390dad/00000000000000007735f3f5/31/l?subset_id=2&fvd=n4&v=3) format("woff2"),
-       url(https://use.typekit.net/af/390dad/00000000000000007735f3f5/31/d?subset_id=2&fvd=n4&v=3) format("woff"),
-       url(https://use.typekit.net/af/390dad/00000000000000007735f3f5/31/a?subset_id=2&fvd=n4&v=3) format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-stretch: normal;
-  font-display: auto;
-}
 
 :root {
   --text: rgb(179, 99, 52);
@@ -53,7 +44,7 @@ body {
 }
 
 html, body { margin: 0; min-height: 100%; overflow-x: hidden; }
-body { background: var(--banner); color: var(--text); font-family: serif; padding-top: 96px; }
+body { background: var(--banner); color: var(--text); font-family: 'freight-text-pro', Georgia, "Times New Roman", serif; padding-top: 96px; }
 
 button, a { -webkit-tap-highlight-color: transparent; text-decoration: none; }
 button:focus, a:focus { outline: none; }
@@ -78,7 +69,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid rgba(217, 158, 84, 0.
 }
 
 .brand-text {
-  font-family: serif;
+  font-family: 'freight-text-pro', Georgia, "Times New Roman", serif;
   font-weight: 700;
   font-size: 1.35rem;
   cursor: pointer;
@@ -136,7 +127,7 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .nav-menu a {
   min-height: 44px; display: flex; align-items: center;
   padding: 10px 16px; color: rgb(217, 158, 84); text-shadow: none;
-  font-family: serif; font-style: italic; font-weight: 700; font-size: 0.85rem;
+  font-family: 'freight-text-pro', Georgia, "Times New Roman", serif; font-style: italic; font-weight: 700; font-size: 0.85rem;
   letter-spacing: 0.16em; text-transform: uppercase;
   transition: background-color 0.2s ease;
 }
@@ -162,10 +153,10 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .cart-drawer-title-wrap { display: flex; align-items: center; gap: 12px; }
 .cart-drawer-icon { width: 22px; height: 22px; display: block; }
 .cart-drawer-header h2, .cart-empty, .cart-item-main h3, .cart-item-size, .qty-value, .cart-item-price, .cart-remove, .cart-subtotal-label, .cart-subtotal-amount, .checkout-btn {
-  font-family: serif;
+  font-family: 'freight-text-pro', Georgia, "Times New Roman", serif;
 }
 .cart-drawer-header h2 { margin: 0; font-size: 1.55rem; font-weight: 700; color: rgba(217, 158, 84, 1); }
-.cart-close { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: none; background: transparent; cursor: pointer; color: rgba(217, 158, 84, 1); font-family: serif; font-size: 2rem; line-height: 1; padding: 0; transition: transform 0.2s ease; }
+.cart-close { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: none; background: transparent; cursor: pointer; color: rgba(217, 158, 84, 1); font-family: 'freight-text-pro', Georgia, "Times New Roman", serif; font-size: 2rem; line-height: 1; padding: 0; transition: transform 0.2s ease; }
 .cart-close:hover { transform: scale(1.1); }
 .cart-drawer-body { padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 28px; flex: 1 1 auto; }
 .cart-empty { color: rgba(217, 158, 84, 1); font-size: 1rem; }
@@ -345,7 +336,7 @@ footer { padding: 24px 0; }
 .product-title {
   margin: 0 0 22px;
   color: rgba(217, 158, 84, 1);
-  font-family: serif;
+  font-family: 'freight-text-pro', Georgia, "Times New Roman", serif;
   font-size: clamp(3.8rem, 5vw, 4.5rem);
   line-height: 0.98;
   font-weight: 700;
@@ -354,7 +345,7 @@ footer { padding: 24px 0; }
 .product-description {
   max-width: 56ch;
   color: rgb(247, 244, 239);
-  font-family: serif;
+  font-family: 'freight-text-pro', Georgia, "Times New Roman", serif;
   font-size: 1.06rem;
   line-height: 1.8;
   margin: 0 0 18px;
@@ -363,7 +354,7 @@ footer { padding: 24px 0; }
 .product-price-inline {
   margin: 0 0 28px;
   color: rgba(217, 158, 84, 1);
-  font-family: serif;
+  font-family: 'freight-text-pro', Georgia, "Times New Roman", serif;
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -378,7 +369,7 @@ footer { padding: 24px 0; }
   border-radius: 10px;
   background: rgba(217, 158, 84, 1);
   color: rgb(110, 67, 77);
-  font-family: serif;
+  font-family: 'freight-text-pro', Georgia, "Times New Roman", serif;
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
@@ -614,7 +605,7 @@ footer { padding: 24px 0; }
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.1);
   color: rgb(247, 244, 239);
-  font-family: serif;
+  font-family: 'freight-text-pro', Georgia, "Times New Roman", serif;
   font-size: 1rem;
   transition: all 0.3s ease;
 }
@@ -635,7 +626,7 @@ footer { padding: 24px 0; }
   color: rgb(110, 67, 77);
   border: none;
   border-radius: 8px;
-  font-family: serif;
+  font-family: 'freight-text-pro', Georgia, "Times New Roman", serif;
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
@@ -676,7 +667,7 @@ footer { padding: 24px 0; }
   border-radius: 8px;
   background: transparent;
   color: rgb(247, 244, 239);
-  font-family: serif;
+  font-family: 'freight-text-pro', Georgia, "Times New Roman", serif;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;

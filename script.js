@@ -342,6 +342,29 @@ if (addToCartBtn) {
   });
 }
 
+function loadProductImages() {
+  const cards = document.querySelectorAll(".card[data-product-id]");
+  cards.forEach((card) => {
+    const productId = card.dataset.productId;
+    fetch(`/.netlify/functions/get-product?productId=${encodeURIComponent(productId)}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        if (data && data.image) {
+          const img = card.querySelector("img");
+          if (img) img.src = data.image;
+          card.dataset.image = data.image;
+        }
+      })
+      .catch((err) => {
+        // Silently fall back to existing src — do not break the page
+        console.warn(`loadProductImages: failed to load image for product "${productId}"`, err);
+      });
+  });
+}
+
 function animateAddToCart(btn) {
   if (btn.classList.contains("btn-success")) return;
   const original = btn.textContent;
@@ -373,6 +396,8 @@ document.addEventListener("click", (e) => {
 
 /* Slow top->bottom cascade on all pages */
 window.addEventListener("DOMContentLoaded", () => {
+  loadProductImages();
+
   const main = document.querySelector("main");
   if (!main) return;
 
