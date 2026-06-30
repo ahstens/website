@@ -19,7 +19,7 @@
       background: rgba(255, 255, 255, 0.06);
       border: 2px solid rgba(217, 158, 84, 0.55);
       border-radius: 16px;
-      max-width: 560px;
+      max-width: 640px;
       width: 100%;
       padding: 52px 44px;
       text-align: center;
@@ -91,6 +91,58 @@
     .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
 
     .return-error h1 { color: rgb(230, 90, 90); }
+
+    .shipping-form {
+      text-align: left;
+      margin-top: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .shipping-form label {
+      display: grid;
+      gap: 6px;
+      color: rgb(247, 244, 239);
+      font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+      font-size: 0.98rem;
+    }
+
+    .shipping-form input,
+    .shipping-form select {
+      border: 1px solid rgba(217, 158, 84, 0.45);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgb(247, 244, 239);
+      font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+      padding: 12px;
+    }
+
+    .shipping-form input::placeholder {
+      color: rgba(247, 244, 239, 0.65);
+    }
+
+    .shipping-form button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .return-inline-note {
+      color: rgba(217, 158, 84, 0.9) !important;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    .tracking-link {
+      color: rgba(217, 158, 84, 1);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      .return-page { padding: 44px 16px; }
+      .return-card { padding: 36px 24px; }
+    }
   </style>
 </head>
 <body>
@@ -102,8 +154,9 @@
       <div class="nav-wrap">
         <nav id="mainNav" class="nav-menu">
           <a href="index.html#featured-coffee">Shop</a>
-          <a href="index.html#table-talk">Table Talk</a>
-          <a href="index.html#about-us">About Us</a>
+          <a href="table-talk.html">Table Talk</a>
+          <a href="about-us.html">About Us</a>
+          <a href="tracking.html">Track Order</a>
         </nav>
       </div>
     </div>
@@ -120,9 +173,38 @@
 
   <script>
     const CART_KEY = 'keystone_cart';
+    const SHIPPING_ADDRESS_KEY = 'keystone_shipping_address';
+    const TRACKING_NUMBER_KEY = 'keystone_tracking_number';
 
     function escapeHtml(str) {
-      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function loadCartItems() {
+      try {
+        const cart = JSON.parse(sessionStorage.getItem(CART_KEY) || '[]');
+        if (!Array.isArray(cart)) return [];
+        return cart.map((item) => ({
+          name: item?.name || 'Item',
+          quantity: Math.max(1, Math.floor(Number(item?.quantity) || 1)),
+          size: item?.size || '12oz',
+        }));
+      } catch {
+        return [];
+      }
+    }
+
+    function loadStoredAddress() {
+      try {
+        const stored = JSON.parse(sessionStorage.getItem(SHIPPING_ADDRESS_KEY) || 'null');
+        return stored && typeof stored === 'object' ? stored : null;
+      } catch {
+        return null;
+      }
     }
 
     async function checkSession() {
@@ -142,8 +224,7 @@
         if (!res.ok || data.error) throw new Error(data.error || 'Could not retrieve payment status');
 
         if (data.status === 'succeeded') {
-          sessionStorage.removeItem(CART_KEY);
-          renderSuccess(card, data.customerEmail);
+          await handleSuccessfulPayment(card, data.customerEmail || null);
         } else if (data.status === 'processing') {
           sessionStorage.removeItem(CART_KEY);
           renderProcessing(card);
@@ -155,14 +236,123 @@
       }
     }
 
-    function renderSuccess(card, email) {
+    async function handleSuccessfulPayment(card, email) {
+      const items = loadCartItems();
+      const storedAddress = loadStoredAddress();
+
+      if (!items.length) {
+        sessionStorage.removeItem(CART_KEY);
+        renderPaymentOnlySuccess(card, email, 'Your payment is confirmed. We could not find cart item details for automatic label creation.');
+        return;
+      }
+
+      if (storedAddress) {
+        await createLabelAndRender(card, storedAddress, items, email);
+        return;
+      }
+
+      renderAddressForm(card, email, items);
+    }
+
+    function renderAddressForm(card, email, items) {
+      card.classList.remove('return-error');
+      card.innerHTML = `
+        <span class="return-icon" aria-hidden="true">&#10003;</span>
+        <h1>Payment Confirmed!</h1>
+        <p>Your payment was successful. Please confirm your shipping address so we can create your label.</p>
+        ${email ? `<p class="return-email">${escapeHtml(email)}</p>` : ''}
+        <form id="shippingForm" class="shipping-form">
+          <label>Full Name<input name="name" type="text" autocomplete="name" required /></label>
+          <label>Street Address<input name="street1" type="text" autocomplete="address-line1" required /></label>
+          <label>City<input name="city" type="text" autocomplete="address-level2" required /></label>
+          <label>State<input name="state" type="text" autocomplete="address-level1" required /></label>
+          <label>ZIP Code<input name="zip" type="text" autocomplete="postal-code" required /></label>
+          <label>Email<input name="email" type="email" autocomplete="email" value="${escapeHtml(email || '')}" required /></label>
+          <button type="submit" class="btn-primary">Create Shipping Label</button>
+        </form>
+      `;
+
+      const form = document.getElementById('shippingForm');
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const toAddress = {
+          name: String(formData.get('name') || '').trim(),
+          street1: String(formData.get('street1') || '').trim(),
+          city: String(formData.get('city') || '').trim(),
+          state: String(formData.get('state') || '').trim(),
+          zip: String(formData.get('zip') || '').trim(),
+          country: 'US',
+          email: String(formData.get('email') || '').trim(),
+        };
+
+        sessionStorage.setItem(SHIPPING_ADDRESS_KEY, JSON.stringify(toAddress));
+        await createLabelAndRender(card, toAddress, items, email);
+      });
+    }
+
+    async function createLabelAndRender(card, toAddress, items, email) {
+      card.classList.remove('return-error');
+      card.innerHTML = `
+        <div class="return-loading">
+          <div class="return-spinner"></div>
+          <p>Payment confirmed. Creating your shipping label&hellip;</p>
+        </div>
+      `;
+
+      try {
+        const res = await fetch('/.netlify/functions/create-shippo-label', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ toAddress, items }),
+        });
+
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Label creation failed');
+
+        if (data.trackingNumber) {
+          sessionStorage.setItem(TRACKING_NUMBER_KEY, data.trackingNumber);
+        }
+
+        sessionStorage.removeItem(CART_KEY);
+        renderSuccess(card, email, data);
+      } catch (err) {
+        sessionStorage.removeItem(CART_KEY);
+        renderPaymentOnlySuccess(
+          card,
+          email,
+          `Your payment went through, but we couldn't create the shipping label automatically: ${err.message || 'Please contact support.'}`
+        );
+      }
+    }
+
+    function renderSuccess(card, email, labelData) {
+      card.classList.remove('return-error');
       card.innerHTML = `
         <span class="return-icon" aria-hidden="true">&#10003;</span>
         <h1>Order Confirmed!</h1>
-        <p>Thank you for your purchase. Your Keystone Coffee is on its way.</p>
+        <p>Your payment was successful and your shipping label has been created.</p>
         ${email ? `<p class="return-email">${escapeHtml(email)}</p>` : ''}
-        <p>A confirmation email will be sent to you shortly.</p>
+        <p class="return-inline-note">Tracking Number: <strong>${escapeHtml(labelData.trackingNumber || 'Pending')}</strong></p>
+        ${labelData.trackingUrl ? `<p><a class="tracking-link" href="${escapeHtml(labelData.trackingUrl)}" target="_blank" rel="noopener noreferrer">Track this shipment</a></p>` : ''}
+        <p>${labelData.carrier ? `Carrier: ${escapeHtml(labelData.carrier)}` : ''} ${labelData.servicelevel ? `(${escapeHtml(labelData.servicelevel)})` : ''}</p>
         <div class="return-actions">
+          <a href="tracking.html" class="btn-primary">Track My Order</a>
+          <a href="index.html" class="btn-primary">Continue Shopping</a>
+        </div>
+      `;
+    }
+
+    function renderPaymentOnlySuccess(card, email, message) {
+      card.classList.remove('return-error');
+      card.innerHTML = `
+        <span class="return-icon" aria-hidden="true">&#10003;</span>
+        <h1>Payment Confirmed!</h1>
+        <p>${escapeHtml(message)}</p>
+        ${email ? `<p class="return-email">${escapeHtml(email)}</p>` : ''}
+        <p>If needed, our team can provide tracking details by email.</p>
+        <div class="return-actions">
+          <a href="tracking.html" class="btn-primary">Track Order</a>
           <a href="index.html" class="btn-primary">Continue Shopping</a>
         </div>
       `;

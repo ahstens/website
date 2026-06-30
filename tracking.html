@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Track Order | Keystone Coffee</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .tracking-page {
+      background: var(--bg);
+      min-height: calc(100vh - 96px);
+      padding: 56px 20px 72px;
+    }
+
+    .tracking-shell {
+      max-width: 860px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.06);
+      border: 2px solid rgba(217, 158, 84, 0.55);
+      border-radius: 16px;
+      padding: 32px 28px;
+    }
+
+    .tracking-shell h1,
+    .tracking-shell h2 {
+      color: rgba(217, 158, 84, 1);
+      font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+    }
+
+    .tracking-shell p,
+    .tracking-shell li,
+    .tracking-shell label {
+      color: rgb(247, 244, 239);
+      font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+    }
+
+    .tracking-form {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+      margin-bottom: 20px;
+    }
+
+    .tracking-form input,
+    .tracking-form select,
+    .tracking-form button {
+      border-radius: 8px;
+      padding: 12px;
+      font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+    }
+
+    .tracking-form input,
+    .tracking-form select {
+      border: 1px solid rgba(217, 158, 84, 0.5);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgb(247, 244, 239);
+    }
+
+    .tracking-form button {
+      border: 0;
+      background: rgba(217, 158, 84, 1);
+      color: rgb(110, 67, 77);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tracking-result {
+      border-top: 1px solid rgba(217, 158, 84, 0.4);
+      margin-top: 24px;
+      padding-top: 20px;
+    }
+
+    .tracking-status {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: rgba(217, 158, 84, 1);
+    }
+
+    .tracking-history {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .tracking-history li {
+      border: 1px solid rgba(217, 158, 84, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 10px 12px;
+    }
+
+    .tracking-message {
+      color: rgba(217, 158, 84, 0.9);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header banner">
+    <div class="container topbar">
+      <div class="brand">
+        <a class="brand-text" href="index.html"><strong>Keystone Coffee</strong></a>
+      </div>
+      <div class="nav-wrap">
+        <button class="cart-toggle" id="cartToggle" aria-expanded="false" aria-controls="cartDrawer" aria-label="Open cart">
+          <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/Shopping%20Cart.png" alt="" aria-hidden="true" class="cart-icon" />
+          <span class="cart-count" id="cartCount" hidden>0</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu">
+          <svg class="nav-icon" width="120" height="120" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M30 20 L70 20 L62 80 L38 80 Z" fill="white" />
+          </svg>
+        </button>
+        <nav id="mainNav" class="nav-menu">
+          <a href="index.html#featured-coffee">Shop</a>
+          <a href="table-talk.html">Table Talk</a>
+          <a href="about-us.html">About Us</a>
+          <a href="tracking.html">Track Order</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="cart-overlay" id="cartOverlay" hidden></div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title-wrap">
+        <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/Shopping%20Cart.png" alt="" aria-hidden="true" class="cart-drawer-icon" />
+        <h2>My Cart</h2>
+      </div>
+      <button class="cart-close" id="cartClose" aria-label="Close cart">×</button>
+    </div>
+    <div class="cart-drawer-body" id="cartItems"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal-row">
+        <div class="cart-subtotal-label">SUBTOTAL</div>
+        <div class="cart-subtotal-amount" id="cartSubtotal">$0.00</div>
+      </div>
+      <button type="button" class="checkout-btn">Checkout</button>
+    </div>
+  </aside>
+
+  <main class="tracking-page">
+    <section class="tracking-shell">
+      <h1>Track Your Order</h1>
+      <p>Enter your carrier and tracking number to check your latest shipment updates.</p>
+
+      <form id="trackingForm" class="tracking-form">
+        <label for="carrier">Carrier</label>
+        <select id="carrier" name="carrier" required>
+          <option value="USPS">USPS</option>
+          <option value="UPS">UPS</option>
+          <option value="FedEx">FedEx</option>
+          <option value="DHL">DHL</option>
+        </select>
+
+        <label for="trackingNumber">Tracking Number</label>
+        <input id="trackingNumber" name="trackingNumber" type="text" required placeholder="Enter tracking number" />
+
+        <button type="submit">Track</button>
+      </form>
+
+      <p id="trackingMessage" class="tracking-message"></p>
+
+      <div id="trackingResult" class="tracking-result" hidden>
+        <h2>Shipment Status</h2>
+        <p>Current status: <strong id="statusValue" class="tracking-status"></strong></p>
+        <p id="detailsValue"></p>
+        <p id="etaValue"></p>
+        <h2>Tracking History</h2>
+        <ul id="historyList" class="tracking-history"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    const TRACKING_NUMBER_KEY = 'keystone_tracking_number';
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    const trackingForm = document.getElementById('trackingForm');
+    const trackingMessage = document.getElementById('trackingMessage');
+    const trackingResult = document.getElementById('trackingResult');
+    const statusValue = document.getElementById('statusValue');
+    const detailsValue = document.getElementById('detailsValue');
+    const etaValue = document.getElementById('etaValue');
+    const historyList = document.getElementById('historyList');
+    const trackingNumberInput = document.getElementById('trackingNumber');
+
+    const storedTracking = sessionStorage.getItem(TRACKING_NUMBER_KEY);
+    if (storedTracking) trackingNumberInput.value = storedTracking;
+
+    trackingForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      trackingMessage.textContent = 'Checking tracking status…';
+      trackingResult.hidden = true;
+
+      const formData = new FormData(trackingForm);
+      const carrier = String(formData.get('carrier') || '').trim();
+      const trackingNumber = String(formData.get('trackingNumber') || '').trim();
+
+      if (!carrier || !trackingNumber) {
+        trackingMessage.textContent = 'Please provide both carrier and tracking number.';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/.netlify/functions/get-tracking?carrier=${encodeURIComponent(carrier)}&trackingNumber=${encodeURIComponent(trackingNumber)}`);
+        const data = await res.json();
+
+        if (!res.ok || data.error) throw new Error(data.error || 'Could not retrieve tracking information');
+
+        sessionStorage.setItem(TRACKING_NUMBER_KEY, trackingNumber);
+
+        statusValue.textContent = data.status || 'Unknown';
+        detailsValue.textContent = data.statusDetails ? `Details: ${data.statusDetails}` : 'Details: Not available';
+        etaValue.textContent = data.eta ? `Estimated delivery: ${data.eta}` : 'Estimated delivery: Not available';
+
+        historyList.innerHTML = (Array.isArray(data.trackingHistory) ? data.trackingHistory : [])
+          .map((eventItem) => `
+            <li>
+              <strong>${escapeHtml(eventItem.status || 'Update')}</strong><br />
+              ${escapeHtml(eventItem.statusDetails || 'No details provided')}<br />
+              ${escapeHtml(eventItem.datetime || '')}
+            </li>
+          `)
+          .join('') || '<li>No tracking history available yet.</li>';
+
+        trackingMessage.textContent = '';
+        trackingResult.hidden = false;
+      } catch (err) {
+        trackingMessage.textContent = err.message || 'Unable to load tracking information right now.';
+      }
+    });
+  </script>
+</body>
+</html>
