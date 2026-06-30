@@ -84,7 +84,7 @@ const appearance = {
     colorTextPlaceholder: "rgba(247, 244, 239, 0.45)",
     colorDanger: "#ff8a8a",
     colorIconTabSelected: "#6e434d",
-    fontFamily: 'Georgia, "Times New Roman", serif',
+    fontFamily: 'Freight Text Pro, Georgia, "Times New Roman", serif',
     fontSizeBase: "16px",
     borderRadius: "8px",
     spacingUnit: "4px",
