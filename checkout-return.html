@@ -77,6 +77,7 @@
 
     .btn-primary {
       display: inline-block;
+      min-height: 44px;
       padding: 14px 28px;
       background: rgba(217, 158, 84, 1);
       color: rgb(110, 67, 77);
@@ -142,6 +143,15 @@
     @media (max-width: 640px) {
       .return-page { padding: 44px 16px; }
       .return-card { padding: 36px 24px; }
+      .return-card h1 { font-size: 1.95rem; }
+    }
+
+    @media (max-width: 480px) {
+      .return-page { padding: 36px 12px; }
+      .return-card { padding: 30px 18px; }
+      .return-icon { font-size: 3rem; margin-bottom: 18px; }
+      .return-card h1 { font-size: 1.7rem; }
+      .return-card p { font-size: 1rem; line-height: 1.6; }
     }
   </style>
 </head>

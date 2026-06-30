@@ -226,6 +226,22 @@
       .checkout-grid { grid-template-columns: 1fr; gap: 28px; }
       .checkout-page { padding: 36px 18px 72px; }
     }
+
+    @media (max-width: 768px) {
+      .checkout-panel { padding: 24px 20px; }
+      .summary-item { grid-template-columns: 56px minmax(0, 1fr) auto; gap: 12px; }
+      .summary-item-image { width: 56px; height: 56px; }
+    }
+
+    @media (max-width: 480px) {
+      :root { --checkout-summary-price-spacing: 4px; }
+      .checkout-page { padding: 32px 14px 60px; }
+      .checkout-subheading { margin-bottom: 30px; }
+      .checkout-panel { padding: 20px 16px; }
+      .summary-item { grid-template-columns: 56px minmax(0, 1fr); align-items: flex-start; }
+      .summary-item-price { grid-column: 2; justify-self: start; margin-top: var(--checkout-summary-price-spacing); }
+      .summary-total-amount { font-size: 1.45rem; }
+    }
   </style>
 </head>
 <body>
