@@ -1,3 +1,6 @@
+*, *::before, *::after { box-sizing: border-box; }
+img, video, iframe { max-width: 100%; height: auto; }
+
 @font-face {
   font-family: adobe-caslon-pro;
   src: url(https://use.typekit.net/af/390dad/00000000000000007735f3f5/31/l?subset_id=2&fvd=n4&v=3) format("woff2"),
@@ -27,9 +30,6 @@
   --hero-underline: rgb(217, 158, 84);
   --banner-text: rgb(217, 158, 84);
 }
-
-*, *::before, *::after { box-sizing: border-box; }
-img, video, iframe { max-width: 100%; height: auto; }
 
 /* Crinkled paper texture overlay */
 html::before {
@@ -690,6 +690,7 @@ footer { padding: 24px 0; }
 
 @media (max-width: 480px) {
   :root {
+    /* 88px matches compact mobile header height; 86px keeps menu flush below its border. */
     --mobile-header-offset: 88px;
     --mobile-nav-offset: 86px;
     --mobile-nav-max-width: calc(100vw - 28px);
