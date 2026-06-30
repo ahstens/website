@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Table Talk | Keystone Coffee</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header banner">
+    <div class="container topbar">
+      <div class="brand">
+        <a class="brand-text" href="index.html"><strong>Keystone Coffee</strong></a>
+      </div>
+      <div class="nav-wrap">
+        <button class="cart-toggle" id="cartToggle" aria-expanded="false" aria-controls="cartDrawer" aria-label="Open cart">
+          <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/Shopping%20Cart.png" alt="" aria-hidden="true" class="cart-icon" />
+          <span class="cart-count" id="cartCount" hidden>0</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu">
+          <svg class="nav-icon" width="120" height="120" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M30 20 L70 20 L62 80 L38 80 Z" fill="white" />
+          </svg>
+        </button>
+        <nav id="mainNav" class="nav-menu">
+          <a href="index.html#featured-coffee">Shop</a>
+          <a href="table-talk.html">Table Talk</a>
+          <a href="about-us.html">About Us</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="cart-overlay" id="cartOverlay" hidden></div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title-wrap">
+        <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/Shopping%20Cart.png" alt="" aria-hidden="true" class="cart-drawer-icon" />
+        <h2>My Cart</h2>
+      </div>
+      <button class="cart-close" id="cartClose" aria-label="Close cart">×</button>
+    </div>
+    <div class="cart-drawer-body" id="cartItems"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal-row">
+        <div class="cart-subtotal-label">SUBTOTAL</div>
+        <div class="cart-subtotal-amount" id="cartSubtotal">$0.00</div>
+      </div>
+      <button type="button" class="checkout-btn">Checkout</button>
+    </div>
+  </aside>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-content">
+        <h1>Table Talk</h1>
+      </div>
+    </section>
+
+    <section class="section blog-section">
+      <div class="container">
+        <h2>Community & Conversations</h2>
+        <div class="blog-grid">
+          <article class="blog-card">
+            <div class="blog-meta">
+              <span class="blog-date">June 15, 2026</span>
+              <span class="blog-category">Leadership</span>
+            </div>
+            <h3>Building Men of Character</h3>
+            <p>
+              In a world that constantly challenges our values, how do we build and maintain strong character? Discover the timeless principles that have guided Christian leaders throughout history.
+            </p>
+            <a href="#" class="read-more">Read More →</a>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-meta">
+              <span class="blog-date">June 12, 2026</span>
+              <span class="blog-category">Faith</span>
+            </div>
+            <h3>Faith in the Workplace</h3>
+            <p>
+              How can Christian men integrate their faith with their professional responsibilities? We explore practical strategies for living out your convictions at work while maintaining integrity and effectiveness.
+            </p>
+            <a href="#" class="read-more">Read More →</a>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-meta">
+              <span class="blog-date">June 8, 2026</span>
+              <span class="blog-category">Community</span>
+            </div>
+            <h3>The Power of Brotherhood</h3>
+            <p>
+              Strong communities are built on genuine relationships and shared values. Learn how men from all walks of life can form meaningful connections that strengthen both faith and character.
+            </p>
+            <a href="#" class="read-more">Read More →</a>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-meta">
+              <span class="blog-date">June 5, 2026</span>
+              <span class="blog-category">Personal Growth</span>
+            </div>
+            <h3>Pursuing Excellence in All Things</h3>
+            <p>
+              Excellence isn't just about achievement—it's about pursuing greatness in every area of life as an act of worship. Explore how this mindset transforms both personal and professional endeavors.
+            </p>
+            <a href="#" class="read-more">Read More →</a>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-meta">
+              <span class="blog-date">June 1, 2026</span>
+              <span class="blog-category">Culture</span>
+            </div>
+            <h3>Engaging Culture with Conviction</h3>
+            <p>
+              As Christians, we're called to engage the world around us. Learn thoughtful approaches to cultural engagement that honor both truth and those we interact with.
+            </p>
+            <a href="#" class="read-more">Read More →</a>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-meta">
+              <span class="blog-date">May 28, 2026</span>
+              <span class="blog-category">Coffee Culture</span>
+            </div>
+            <h3>The Art of Good Conversation Over Coffee</h3>
+            <p>
+              Some of life's most important conversations happen over a good cup of coffee. Discover how to foster meaningful dialogue and deeper connections with the men in your life.
+            </p>
+            <a href="#" class="read-more">Read More →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="social-section">
+      <div class="container social-inner">
+        <h2>Follow Us on Social Media</h2>
+        <p>Stay connected for the latest discussions, insights, and community updates.</p>
+        <div class="social-links">
+          <a href="https://x.com" target="_blank" rel="noopener noreferrer">X</a>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter-section">
+      <div class="container newsletter-inner">
+        <h2>Join Our Community</h2>
+        <p>Get weekly insights, exclusive content, and join conversations about faith, leadership, and culture.</p>
+        <form class="newsletter-form" action="#" method="POST">
+          <input type="email" placeholder="Enter your email" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
