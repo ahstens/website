@@ -12,6 +12,8 @@ const cartItemsEl = document.getElementById("cartItems");
 const cartSubtotalEl = document.getElementById("cartSubtotal");
 const cartCountEl = document.getElementById("cartCount");
 const addToCartBtn = document.querySelector(".product-add-btn");
+const STRIPE_PRODUCT_ENDPOINT = "/.netlify/functions/get-product";
+let liveProductPrice = null;
 
 // Cart backed by sessionStorage so items persist across page navigations
 const CART_KEY = "keystone_cart";
@@ -106,6 +108,125 @@ function addToCart(product) {
 
 function isProductPage() {
   return location.pathname.includes("product-");
+}
+
+async function fetchStripeProduct(productId) {
+  const response = await fetch(`${STRIPE_PRODUCT_ENDPOINT}?productId=${encodeURIComponent(productId)}`);
+  if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+  return response.json();
+}
+
+function setProductPageFromStripe(product) {
+  if (!product) return;
+
+  const titleEl = document.querySelector(".product-title");
+  const descriptionEl = document.querySelector(".product-description");
+  const purchasePriceEl = document.querySelector(".purchase-card-price");
+
+  if (titleEl && product.name) titleEl.textContent = product.name;
+  if (descriptionEl && product.description) descriptionEl.textContent = product.description;
+
+  if (purchasePriceEl && product.price?.display) {
+    purchasePriceEl.textContent = `$${product.price.display}`;
+  }
+
+  if (typeof product.price?.display === "string") {
+    const parsed = Number(product.price.display);
+    liveProductPrice = Number.isFinite(parsed) ? parsed : null;
+  }
+
+  if (product.name) document.title = `${product.name} | Keystone Coffee`;
+}
+
+function setCardFromStripe(card, product) {
+  if (!card || !product) return;
+
+  const cardTitleEl = card.querySelector(".card-body h3");
+  const cardPriceEl = card.querySelector(".card-body .card-price");
+
+  if (product.name) {
+    card.dataset.name = product.name;
+    if (cardTitleEl) cardTitleEl.textContent = product.name;
+  }
+
+  if (product.price?.display) {
+    const displayPrice = product.price.display;
+    card.dataset.price = displayPrice;
+    if (cardPriceEl) cardPriceEl.textContent = `$${displayPrice}`;
+  }
+}
+
+async function initProductPageFromStripe() {
+  if (!isProductPage()) return;
+
+  const main = document.querySelector("main[data-product-id]");
+  const productId = main?.dataset.productId;
+  if (!productId) return;
+
+  try {
+    const product = await fetchStripeProduct(productId);
+    setProductPageFromStripe(product);
+  } catch (error) {
+    console.warn("Unable to load live product data:", error);
+  }
+}
+
+async function initProductCards() {
+  const cards = Array.from(document.querySelectorAll(".card[data-product-id]"));
+  if (cards.length === 0) return;
+
+  const productCache = new Map();
+
+  await Promise.all(
+    cards.map(async (card) => {
+      const productId = card.dataset.productId;
+      if (!productId) return;
+
+      try {
+        if (!productCache.has(productId)) {
+          productCache.set(productId, fetchStripeProduct(productId));
+        }
+
+        const product = await productCache.get(productId);
+        setCardFromStripe(card, product);
+      } catch (error) {
+        console.warn("Unable to load card product data:", error);
+      }
+    })
+  );
+}
+
+function initShopFilters() {
+  const searchInput = document.querySelector(".shop-search");
+  const filterButtons = Array.from(document.querySelectorAll(".shop-filter-btn"));
+  const cards = Array.from(document.querySelectorAll(".shop-page .card[data-origin]"));
+  if (!searchInput || filterButtons.length === 0 || cards.length === 0) return;
+
+  let activeOrigin = "all";
+
+  const applyFilters = () => {
+    const searchValue = searchInput.value.trim().toLowerCase();
+
+    cards.forEach((card) => {
+      const cardName = (card.dataset.name || card.querySelector(".card-body h3")?.textContent || "").toLowerCase();
+      const cardOrigin = (card.dataset.origin || "").toLowerCase();
+      const matchesSearch = cardName.includes(searchValue);
+      const matchesOrigin = activeOrigin === "all" || cardOrigin === activeOrigin;
+      card.hidden = !(matchesSearch && matchesOrigin);
+    });
+  };
+
+  searchInput.addEventListener("input", applyFilters);
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      activeOrigin = (button.dataset.filter || "all").toLowerCase();
+      filterButtons.forEach((btn) => btn.classList.toggle("active", btn === button));
+      applyFilters();
+    });
+  });
+
+  applyFilters();
 }
 
 function isCartOpen() {
@@ -211,7 +332,8 @@ if (addToCartBtn) {
       document.querySelector(".purchase-card-price")?.textContent.trim() ||
       document.querySelector(".product-price-inline")?.textContent.trim() ||
       "$9.99";
-    const price = Number(priceText.replace(/[^0-9.]/g, "")) || 9.99;
+    const fallbackPrice = Number(priceText.replace(/[^0-9.]/g, "")) || 9.99;
+    const price = Number.isFinite(liveProductPrice) ? liveProductPrice : fallbackPrice;
     const image = document.querySelector(".product-media img")?.src || "";
     const size = document.querySelector(".size-option.active")?.dataset.size || "12oz";
 
@@ -280,6 +402,12 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   if (!isProductPage()) showBanner();
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  initProductPageFromStripe();
+  initProductCards();
+  initShopFilters();
 });
 
 renderCart();

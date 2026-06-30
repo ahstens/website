@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Store Homepage</title>
+  <title>Shop | Keystone Coffee</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -55,21 +55,25 @@
     </div>
   </aside>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-content">
-        <div class="hero-stack">
-          <img class="hero-fg" src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/ChatGPT%20Image%20Jun%2014,%202026,%2001_45_57%20AM-recolored%20(1).png" alt="Hero logo" />
-        </div>
-        <h1>Christian Coffee for Christian Men</h1>
-      </div>
-    </section>
-
-    <section class="section" id="featured-coffee">
+  <main class="shop-page">
+    <section class="section" id="shop-products">
       <div class="container">
-        <h2>Featured Coffee</h2>
+        <h2>Shop Coffee</h2>
+        <div class="shop-controls">
+          <input class="shop-search" type="search" placeholder="Search coffee..." aria-label="Search products" />
+          <div class="shop-filter-group" role="group" aria-label="Filter by origin">
+            <button type="button" class="shop-filter-btn active" data-filter="all">All</button>
+            <button type="button" class="shop-filter-btn" data-filter="ethiopia">Ethiopia</button>
+            <button type="button" class="shop-filter-btn" data-filter="colombia">Colombia</button>
+            <button type="button" class="shop-filter-btn" data-filter="guatemala">Guatemala</button>
+            <button type="button" class="shop-filter-btn" data-filter="sumatra">Sumatra</button>
+            <button type="button" class="shop-filter-btn" data-filter="costa rica">Costa Rica</button>
+            <button type="button" class="shop-filter-btn" data-filter="brazil">Brazil</button>
+          </div>
+        </div>
+
         <div class="grid">
-          <a class="card" href="product-ethiopian-yirgacheffe.html" data-product-id="prod_UnQQUDh462KuOs" data-name="Ethiopian Yirgacheffe" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4v[...]
+          <a class="card" href="product-ethiopian-yirgacheffe.html" data-product-id="prod_UnQQUDh462KuOs" data-origin="Ethiopia" data-name="Ethiopian Yirgacheffe" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png">
             <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png" alt="Ethiopian Yirgacheffe" />
             <div class="card-body">
               <h3>Ethiopian Yirgacheffe</h3>
@@ -77,7 +81,7 @@
             </div>
           </a>
 
-          <a class="card" href="product-colombia-supremo.html" data-product-id="prod_UnQQUDh462KuOs" data-name="Colombia Supremo" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3[...]
+          <a class="card" href="product-colombia-supremo.html" data-product-id="prod_UnQQUDh462KuOs" data-origin="Colombia" data-name="Colombia Supremo" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png">
             <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png" alt="Colombia Supremo" />
             <div class="card-body">
               <h3>Colombia Supremo</h3>
@@ -85,7 +89,7 @@
             </div>
           </a>
 
-          <a class="card" href="product-guatemala-antigua.html" data-product-id="prod_UnQQUDh462KuOs" data-name="Guatemala Antigua" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2[...]
+          <a class="card" href="product-guatemala-antigua.html" data-product-id="prod_UnQQUDh462KuOs" data-origin="Guatemala" data-name="Guatemala Antigua" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png">
             <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png" alt="Guatemala Antigua" />
             <div class="card-body">
               <h3>Guatemala Antigua</h3>
@@ -93,7 +97,7 @@
             </div>
           </a>
 
-          <a class="card" href="product-sumatra-mandheling.html" data-product-id="prod_UnQQUDh462KuOs" data-name="Sumatra Mandheling" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6[...]
+          <a class="card" href="product-sumatra-mandheling.html" data-product-id="prod_UnQQUDh462KuOs" data-origin="Sumatra" data-name="Sumatra Mandheling" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png">
             <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png" alt="Sumatra Mandheling" />
             <div class="card-body">
               <h3>Sumatra Mandheling</h3>
@@ -101,7 +105,7 @@
             </div>
           </a>
 
-          <a class="card" href="product-costa-rica-tarrazu.html" data-product-id="prod_UnQQUDh462KuOs" data-name="Costa Rica Tarrazú" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2[...]
+          <a class="card" href="product-costa-rica-tarrazu.html" data-product-id="prod_UnQQUDh462KuOs" data-origin="Costa Rica" data-name="Costa Rica Tarrazú" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png">
             <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png" alt="Costa Rica Tarrazú" />
             <div class="card-body">
               <h3>Costa Rica Tarrazú</h3>
@@ -109,60 +113,13 @@
             </div>
           </a>
 
-          <a class="card" href="product-brazil-santos.html" data-product-id="prod_UnQQUDh462KuOs" data-name="Brazil Santos" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-313045[...]
+          <a class="card" href="product-brazil-santos.html" data-product-id="prod_UnQQUDh462KuOs" data-origin="Brazil" data-name="Brazil Santos" data-price="9.99" data-size="12 oz" data-image="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png">
             <img src="https://uploads.onecompiler.io/44s4v5rmy/44s4vrcn2/6-2-3130457824-removebg-preview.png" alt="Brazil Santos" />
             <div class="card-body">
               <h3>Brazil Santos</h3>
               <p class="card-price">$9.99</p>
             </div>
           </a>
-        </div>
-        <br><br><br><br>
-      </div>
-    </section>
-
-    <section class="company-summary" id="about-us">
-      <div class="container summary-inner">
-        <h3>Caffeine for Kings</h3>
-        <p>
-            Keystone Coffee is in the business of equipping Christians to fight the good fight, build to last, and conquer the world for Christ's Kingdom and glory.
-            <br>
-             
-              <br>
-
-Christ is Lord from heaven to earth, over cosmos and culture—and he has something to say about every part of what it means to be human. In fact, he is making a <em>new</em> humanity after his o[...]
-        </p>
-      </div>
-    </section>
-
-    <section class="social-section" id="table-talk">
-      <div class="container social-inner">
-        <h2>Follow Us on Social Media</h2>
-        <p>Stay connected for updates, new roasts, and announcements.</p>
-        <div class="social-links">
-          <a href="https://x.com" target="_blank" rel="noopener noreferrer">X</a>
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact-section">
-      <div class="container contact-inner">
-        <h2>Contact Us</h2>
-        <div class="contact-grid">
-          <div class="contact-item">
-            <h3>Phone</h3>
-            <p>(555) 123-4567</p>
-          </div>
-          <div class="contact-item">
-            <h3>Email</h3>
-            <p>hello@keystonecoffee.com</p>
-          </div>
-          <div class="contact-item">
-            <h3>Business Address</h3>
-            <p>123 Main Street, Hometown, USA</p>
-          </div>
         </div>
       </div>
     </section>
