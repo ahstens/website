@@ -31,6 +31,14 @@ function saveCart() {
   } catch {}
 }
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 const cart = loadCart();
 
 function formatMoney(value) {
@@ -64,10 +72,10 @@ function renderCart() {
     .map(
       (item, index) => `
       <div class="cart-item">
-        <img class="cart-item-image" src="${item.image}" alt="${item.name}" />
+        <img class="cart-item-image" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" />
         <div class="cart-item-main">
-          <h3>${item.name}</h3>
-          <p class="cart-item-size">Size: ${item.size}</p>
+          <h3>${escapeHtml(item.name)}</h3>
+          <p class="cart-item-size">Size: ${escapeHtml(item.size)}</p>
           <div class="quantity-selector" aria-label="Quantity selector">
             <button type="button" class="qty-btn" data-action="decrease" data-index="${index}" aria-label="Decrease quantity">−</button>
             <span class="qty-value">${item.quantity}</span>
