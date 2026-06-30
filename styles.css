@@ -29,7 +29,7 @@
 }
 
 html, body { margin: 0; min-height: 100%; overflow-x: hidden; }
-body { background: var(--banner); color: var(--text); font-family: "Freight Text Pro", Georgia, "Times New Roman", serif; padding-top: 96px; }
+body { background: var(--banner); color: var(--text); font-family: "Freight Text Pro", serif; padding-top: 96px; }
 
 button, a { -webkit-tap-highlight-color: transparent; text-decoration: none; }
 button:focus, a:focus { outline: none; }
@@ -54,7 +54,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid rgba(217, 158, 84, 0.
 }
 
 .brand-text {
-  font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+  font-family: "Freight Text Pro", serif;
   font-weight: 700;
   font-size: 1.35rem;
 }
@@ -100,7 +100,7 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .nav-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
 .nav-menu a {
   padding: 10px 16px; color: rgb(217, 158, 84); text-shadow: none;
-  font-family: "Freight Text Pro", Georgia, "Times New Roman", serif; font-style: italic; font-weight: 700; font-size: 0.85rem;
+  font-family: "Freight Text Pro", serif; font-style: italic; font-weight: 700; font-size: 0.85rem;
   letter-spacing: 0.16em; text-transform: uppercase;
 }
 
@@ -121,10 +121,10 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .cart-drawer-title-wrap { display: flex; align-items: center; gap: 12px; }
 .cart-drawer-icon { width: 22px; height: 22px; display: block; }
 .cart-drawer-header h2, .cart-empty, .cart-item-main h3, .cart-item-size, .qty-value, .cart-item-price, .cart-remove, .cart-subtotal-label, .cart-subtotal-amount, .checkout-btn {
-  font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+  font-family: "Freight Text Pro", serif;
 }
 .cart-drawer-header h2 { margin: 0; font-size: 1.55rem; font-weight: 700; color: rgba(217, 158, 84, 1); }
-.cart-close { border: none; background: transparent; cursor: pointer; color: rgba(217, 158, 84, 1); font-family: "Freight Text Pro", Georgia, "Times New Roman", serif; font-size: 2rem; line-height: 1; padding: 0; }
+.cart-close { border: none; background: transparent; cursor: pointer; color: rgba(217, 158, 84, 1); font-family: "Freight Text Pro", serif; font-size: 2rem; line-height: 1; padding: 0; }
 .cart-drawer-body { padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 28px; flex: 1 1 auto; }
 .cart-empty { color: rgba(217, 158, 84, 1); font-size: 1rem; }
 .cart-item { display: grid; grid-template-columns: 80px minmax(0, 1fr) auto; gap: 18px; align-items: start; }
@@ -149,7 +149,7 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .hero-content { text-align: center; max-width: 1100px; margin: 0 auto; flex-direction: column; align-items: center; position: relative; gap: 0; }
 .hero-stack { position: relative; width: min(700px, 96vw); aspect-ratio: 1 / 1; margin: 0 auto -90px; }
 .hero-stack img.hero-fg { width: 100%; height: auto; display: block; object-fit: contain; }
-.hero h1 { position: relative; z-index: 3; color: var(--hero-text); padding: 0; display: inline-block; width: fit-content; margin: -130px auto 0; white-space: normal; overflow-wrap: anywhere; text-align: center; font-family: "Freight Text Pro", Georgia, "Times New Roman", serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 700; line-height: 1.08; }
+.hero h1 { position: relative; z-index: 3; color: var(--hero-text); padding: 0; display: inline-block; width: fit-content; margin: -130px auto 0; white-space: normal; overflow-wrap: anywhere; text-align: center; font-family: "Freight Text Pro", serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 700; line-height: 1.08; }
 .hero h1::after { content: ""; display: block; width: 80%; height: 2px; background: var(--hero-underline); margin: 18px auto 0; }
 
 .section { background: var(--products-bg); padding-bottom: 0; }
@@ -238,7 +238,7 @@ footer { padding: 24px 0; }
 .product-title {
   margin: 0 0 22px;
   color: rgba(217, 158, 84, 1);
-  font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+  font-family: "Freight Text Pro", serif;
   font-size: clamp(3.8rem, 5vw, 4.5rem);
   line-height: 0.98;
   font-weight: 700;
@@ -247,7 +247,7 @@ footer { padding: 24px 0; }
 .product-description {
   max-width: 56ch;
   color: rgb(247, 244, 239);
-  font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+  font-family: "Freight Text Pro", serif;
   font-size: 1.06rem;
   line-height: 1.8;
   margin: 0 0 18px;
@@ -256,7 +256,7 @@ footer { padding: 24px 0; }
 .product-price-inline {
   margin: 0 0 28px;
   color: rgba(217, 158, 84, 1);
-  font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+  font-family: "Freight Text Pro", serif;
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -271,7 +271,7 @@ footer { padding: 24px 0; }
   border-radius: 10px;
   background: rgba(217, 158, 84, 1);
   color: rgb(110, 67, 77);
-  font-family: "Freight Text Pro", Georgia, "Times New Roman", serif;
+  font-family: "Freight Text Pro", serif;
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
