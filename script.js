@@ -236,8 +236,9 @@ function loadProductImages() {
           card.dataset.image = data.image;
         }
       })
-      .catch(() => {
+      .catch((err) => {
         // Silently fall back to existing src — do not break the page
+        console.warn(`loadProductImages: failed to load image for product "${productId}"`, err);
       });
   });
 }
