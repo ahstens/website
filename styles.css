@@ -662,10 +662,6 @@ footer { padding: 24px 0; }
   .product-add-btn { max-width: none; }
   .grid, .features, .contact-grid, .about-content, .team-grid, .blog-grid { grid-template-columns: 1fr; }
   
-  .about-content {
-    grid-template-columns: 1fr;
-  }
-  
   .newsletter-form {
     flex-direction: column;
   }
