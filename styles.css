@@ -28,6 +28,9 @@
   --banner-text: rgb(217, 158, 84);
 }
 
+*, *::before, *::after { box-sizing: border-box; }
+img, video, iframe { max-width: 100%; height: auto; }
+
 /* Crinkled paper texture overlay */
 html::before {
   content: '';
@@ -48,9 +51,6 @@ body {
   position: relative;
   z-index: 0;
 }
-
-*, *::before, *::after { box-sizing: border-box; }
-img, video, iframe { max-width: 100%; height: auto; }
 
 html, body { margin: 0; min-height: 100%; overflow-x: hidden; }
 body { background: var(--banner); color: var(--text); font-family: serif; padding-top: 96px; }
@@ -660,7 +660,12 @@ footer { padding: 24px 0; }
   .product-media img { width: 100%; max-width: 100%; }
   .product-info { padding-right: 0; max-width: none; }
   .product-add-btn { max-width: none; }
-  .grid, .features, .contact-grid, .about-content, .team-grid, .blog-grid { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+  .features { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .about-content { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
   
   .newsletter-form {
     flex-direction: column;
@@ -686,18 +691,18 @@ footer { padding: 24px 0; }
 @media (max-width: 480px) {
   :root {
     --mobile-header-offset: 88px;
-    --mobile-nav-border-offset: 2px;
-    --mobile-nav-inline-gutter: 14px;
+    --mobile-nav-offset: 86px;
+    --mobile-nav-max-width: calc(100vw - 28px);
   }
   body { padding-top: var(--mobile-header-offset); }
   .container { padding: 0 14px; }
   .topbar { gap: 8px; }
   .brand-text { font-size: 1.1rem; }
-  .cart-toggle { width: 48px; height: 48px; }
-  .cart-icon { width: 30px; height: 30px; }
+  .cart-toggle { width: 44px; height: 44px; }
+  .cart-icon { width: 28px; height: 28px; }
   .nav-toggle { width: 64px; height: 48px; }
   .nav-icon { width: 68px; height: 44px; }
-  .nav-menu { top: calc(var(--mobile-header-offset) - var(--mobile-nav-border-offset)); min-width: min(220px, calc(100vw - (var(--mobile-nav-inline-gutter) * 2))); }
+  .nav-menu { top: var(--mobile-nav-offset); min-width: min(220px, var(--mobile-nav-max-width)); }
   .social-links a, .newsletter-form button { width: 100%; min-height: 46px; justify-content: center; }
   .qty-btn { width: 44px; height: 44px; }
   .qty-value { min-width: 40px; }
