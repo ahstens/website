@@ -213,9 +213,24 @@ if (addToCartBtn) {
       "$9.99";
     const price = Number(priceText.replace(/[^0-9.]/g, "")) || 9.99;
     const image = document.querySelector(".product-media img")?.src || "";
+    const size = document.querySelector(".size-option.active")?.dataset.size || "12oz";
 
-    addToCart({ name: title, price, size: "12 oz", image });
+    addToCart({ name: title, price, size, image });
+    animateAddToCart(addToCartBtn);
   });
+}
+
+function animateAddToCart(btn) {
+  if (btn.classList.contains("btn-success")) return;
+  const original = btn.textContent;
+  btn.classList.add("btn-success");
+  btn.textContent = "✓ Added to Cart";
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.classList.remove("btn-success");
+    btn.textContent = original;
+    btn.disabled = false;
+  }, 1500);
 }
 
 // Checkout navigates to the dedicated, fully themed checkout page rather than
@@ -268,6 +283,15 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 renderCart();
+
+/* Size option selector (product pages) */
+const sizeOptionBtns = document.querySelectorAll(".size-option");
+sizeOptionBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    sizeOptionBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
 
 let lastScrollY = window.scrollY;
 let hideTimer = null;
