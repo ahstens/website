@@ -335,6 +335,7 @@
         }
 
         sessionStorage.removeItem(CART_KEY);
+        sessionStorage.removeItem(SHIPPING_ADDRESS_KEY);
         renderSuccess(card, email, data);
       } catch (err) {
         sessionStorage.removeItem(CART_KEY);

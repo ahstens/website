@@ -1,5 +1,7 @@
 // Standalone, themed Stripe checkout page (Payment Element).
 const CART_KEY = "keystone_cart";
+const SHIPPING_ADDRESS_KEY = "keystone_shipping_address";
+const TRACKING_NUMBER_KEY = "keystone_tracking_number";
 
 function loadCart() {
   try {
@@ -25,6 +27,15 @@ function escapeHtml(str) {
 const cart = loadCart();
 const summaryEl = document.getElementById("orderSummary");
 const paymentArea = document.getElementById("paymentArea");
+const checkoutGridEl = document.querySelector(".checkout-grid");
+const shippingFieldIds = {
+  name: "shippingName",
+  street1: "shippingStreet1",
+  city: "shippingCity",
+  state: "shippingState",
+  zip: "shippingZip",
+  email: "shippingEmail",
+};
 
 function renderSummary() {
   if (cart.length === 0) {
@@ -69,6 +80,145 @@ function loadStripeJs() {
     script.onerror = () => reject(new Error("Failed to load Stripe.js"));
     document.head.appendChild(script);
   });
+}
+
+function loadStoredAddress() {
+  try {
+    const stored = JSON.parse(sessionStorage.getItem(SHIPPING_ADDRESS_KEY) || "null");
+    return stored && typeof stored === "object" ? stored : null;
+  } catch {
+    return null;
+  }
+}
+
+function formatExternalUrl(value) {
+  try {
+    const parsed = new URL(String(value || ""), window.location.origin);
+    if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+      return parsed.toString();
+    }
+  } catch {}
+  return "";
+}
+
+function getShippingInput(field) {
+  return document.getElementById(shippingFieldIds[field]);
+}
+
+function prefillShippingAddress() {
+  const stored = loadStoredAddress();
+  if (!stored) return;
+  Object.keys(shippingFieldIds).forEach((field) => {
+    const input = getShippingInput(field);
+    if (input) input.value = String(stored[field] || "");
+  });
+}
+
+function collectShippingAddress() {
+  const values = {};
+  const missing = [];
+
+  Object.keys(shippingFieldIds).forEach((field) => {
+    const input = getShippingInput(field);
+    const value = String(input?.value || "").trim();
+    values[field] = value;
+    if (!value) {
+      missing.push(field);
+      if (input) input.setAttribute("aria-invalid", "true");
+    } else if (input) {
+      input.removeAttribute("aria-invalid");
+    }
+  });
+
+  return {
+    missing,
+    toAddress: {
+      name: values.name,
+      street1: values.street1,
+      city: values.city,
+      state: values.state,
+      zip: values.zip,
+      country: "US",
+      email: values.email,
+    },
+  };
+}
+
+function renderCheckoutState(content) {
+  if (!checkoutGridEl) return;
+  checkoutGridEl.innerHTML = `
+    <section class="checkout-panel checkout-result-panel">
+      ${content}
+    </section>`;
+}
+
+function renderSuccess(toAddress, labelData) {
+  const safeTrackingUrl = formatExternalUrl(labelData.trackingUrl);
+  renderCheckoutState(`
+    <span class="checkout-result-icon" aria-hidden="true">&#10003;</span>
+    <h2>Order Confirmed!</h2>
+    <p>Your payment was successful and your shipping label has been created.</p>
+    ${toAddress.email ? `<p class="checkout-result-email">${escapeHtml(toAddress.email)}</p>` : ""}
+    <p class="checkout-result-note">Tracking Number: <strong>${escapeHtml(labelData.trackingNumber || "Pending")}</strong></p>
+    ${safeTrackingUrl ? `<p><a class="tracking-link" href="${safeTrackingUrl}" target="_blank" rel="noopener noreferrer">Track this shipment</a></p>` : ""}
+    <p>${labelData.carrier ? `Carrier: ${escapeHtml(labelData.carrier)}` : ""} ${labelData.servicelevel ? `(${escapeHtml(labelData.servicelevel)})` : ""}</p>
+    <div class="checkout-result-actions">
+      <a href="tracking.html" class="pay-btn">Track My Order</a>
+      <a href="index.html" class="pay-btn">Continue Shopping</a>
+    </div>
+  `);
+}
+
+function renderPaymentOnlySuccess(toAddress, message) {
+  renderCheckoutState(`
+    <span class="checkout-result-icon" aria-hidden="true">&#10003;</span>
+    <h2>Payment Confirmed!</h2>
+    <p>${escapeHtml(message)}</p>
+    ${toAddress.email ? `<p class="checkout-result-email">${escapeHtml(toAddress.email)}</p>` : ""}
+    <p>If needed, our team can provide tracking details by email.</p>
+    <div class="checkout-result-actions">
+      <a href="tracking.html" class="pay-btn">Track Order</a>
+      <a href="index.html" class="pay-btn">Continue Shopping</a>
+    </div>
+  `);
+}
+
+function renderProcessingState() {
+  renderCheckoutState(`
+    <span class="checkout-result-icon" aria-hidden="true">&#9203;</span>
+    <h2>Payment Processing</h2>
+    <p>Your payment is being processed. We'll email you once it's confirmed.</p>
+    <div class="checkout-result-actions">
+      <a href="index.html" class="pay-btn">Continue Shopping</a>
+    </div>
+  `);
+}
+
+async function createLabelForSuccessfulPayment(toAddress) {
+  try {
+    const res = await fetch("/.netlify/functions/create-shippo-label", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ toAddress, items: cart }),
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || "Label creation failed");
+
+    if (data.trackingNumber) {
+      sessionStorage.setItem(TRACKING_NUMBER_KEY, data.trackingNumber);
+    }
+
+    sessionStorage.removeItem(CART_KEY);
+    sessionStorage.removeItem(SHIPPING_ADDRESS_KEY);
+    renderSuccess(toAddress, data);
+  } catch (err) {
+    sessionStorage.removeItem(CART_KEY);
+    sessionStorage.removeItem(SHIPPING_ADDRESS_KEY);
+    renderPaymentOnlySuccess(
+      toAddress,
+      `Your payment went through, but we couldn't create the shipping label automatically: ${err.message || "Please contact support."}`
+    );
+  }
 }
 
 // Stripe Appearance API tuned to the Keystone Coffee palette so the payment
@@ -185,30 +335,51 @@ async function handleSubmit(event) {
   event.preventDefault();
   if (submitting || !stripe || !elements) return;
 
-  submitting = true;
   const payBtn = document.getElementById("payBtn");
   const messageEl = document.getElementById("payMessage");
+  if (!payBtn || !messageEl) return;
   messageEl.textContent = "";
+
+  const { missing, toAddress } = collectShippingAddress();
+  if (missing.length > 0) {
+    messageEl.textContent = "Please fill in your full shipping address before completing payment.";
+    return;
+  }
+
+  sessionStorage.setItem(SHIPPING_ADDRESS_KEY, JSON.stringify(toAddress));
+
+  submitting = true;
   payBtn.disabled = true;
   payBtn.innerHTML = '<span class="pay-btn-spinner" aria-hidden="true"></span> Processing&hellip;';
 
-  const { error } = await stripe.confirmPayment({
+  const { error, paymentIntent } = await stripe.confirmPayment({
     elements,
     confirmParams: {
       return_url: `${window.location.origin}/checkout-return.html`,
     },
+    redirect: "if_required",
   });
 
-  // Reaching here means the redirect did not happen, so an error occurred.
   if (error) {
     messageEl.textContent = error.message || "Payment could not be completed. Please try again.";
+  } else if (paymentIntent?.status === "succeeded") {
+    await createLabelForSuccessfulPayment(toAddress);
+  } else if (paymentIntent?.status === "processing") {
+    sessionStorage.removeItem(CART_KEY);
+    renderProcessingState();
+  } else if (paymentIntent) {
+    messageEl.textContent = `Payment status: ${paymentIntent.status}. Please follow any prompts or check your email for updates.`;
   }
+
   submitting = false;
-  payBtn.disabled = false;
-  payBtn.textContent = "Pay now";
+  if (document.body.contains(payBtn)) {
+    payBtn.disabled = false;
+    payBtn.textContent = "Pay now";
+  }
 }
 
 renderSummary();
+prefillShippingAddress();
 
 if (cart.length === 0) {
   paymentArea.innerHTML = `<p class="summary-empty">Add an item to your cart to check out.</p>`;
