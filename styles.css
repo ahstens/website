@@ -31,7 +31,7 @@ html::before {
   width: 100%;
   height: 100%;
   background-image:
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="250" height="250"><filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="250" height="250" filter="url(%23paper)" opacity="0.09"/></svg>');
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="250" height="250"><filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/><feBlend in="SourceGraphic" in2="grayNoise" mode="multiply" result="blended"/><feComposite in="blended" in2="SourceGraphic" operator="in"/></filter><rect width="250" height="250" filter="url(%23paper)" opacity="0.08"/></svg>');
   background-attachment: fixed;
   pointer-events: none;
   z-index: 1;
@@ -139,7 +139,7 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .cart-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 9997; }
 .cart-drawer {
   position: fixed; top: 0; right: 0; width: min(460px, 100vw); height: 100vh;
-  background: rgb(110, 67, 77); border-bottom: 2px solid rgba(217, 158, 84, 0.85);
+  background: rgb(110, 67, 77); transform: translateX(100%);
   transition: transform 250ms ease; z-index: 9998; display: flex; flex-direction: column;
   box-shadow: -8px 0 18px rgba(0, 0, 0, 0.08); color: rgba(217, 158, 84, 1);
 }
@@ -147,6 +147,7 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .cart-drawer-header, .cart-drawer-footer { padding: 24px; }
 .cart-drawer-header {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  border-bottom: 2px solid rgba(217, 158, 84, 0.85);
 }
 .cart-drawer-title-wrap { display: flex; align-items: center; gap: 12px; }
 .cart-drawer-icon { width: 22px; height: 22px; display: block; }
@@ -170,11 +171,11 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .cart-item-price { margin: 0; font-size: 1.05rem; font-weight: 700; color: rgba(217, 158, 84, 1); text-align: right; }
 .cart-remove { border: none; background: transparent; color: rgba(217, 158, 84, 1); font-size: 1.4rem; line-height: 1; cursor: pointer; padding: 0; transition: transform 0.2s ease; }
 .cart-remove:hover { transform: scale(1.15); }
-.cart-drawer-footer { border-top: 2px solid rgba(217, 158, 84, 0.85); }
+.cart-drawer-footer { }
 .cart-subtotal-row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
 .cart-subtotal-label { font-style: italic; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(217, 158, 84, 1); }
 .cart-subtotal-amount { font-size: 1.35rem; font-weight: 700; color: rgba(217, 158, 84, 1); }
-.checkout-btn { width: 100%; height: 54px; border: none; border-radius: 8px; background: rgba(217, 158, 84, 1); color: rgb(110, 67, 77); font-size: 1.15rem; font-weight: 700; cursor: pointer; transition: all 200ms ease; }
+.checkout-btn { width: 100%; height: 54px; border: none; border-radius: 8px; background: rgba(217, 158, 84, 1); color: rgb(110, 67, 77); font-size: 1.15rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s ease, transform 0.2s ease; }
 .checkout-btn:hover { opacity: 0.92; transform: translateY(-1px); }
 .checkout-btn:active { transform: translateY(1px); }
 
@@ -182,7 +183,7 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .hero-content { text-align: center; max-width: 1100px; margin: 0 auto; flex-direction: column; align-items: center; position: relative; gap: 0; }
 .hero-stack { position: relative; width: min(700px, 96vw); aspect-ratio: 1 / 1; margin: 0 auto -90px; }
 .hero-stack img.hero-fg { width: 100%; height: auto; display: block; object-fit: contain; }
-.hero h1 { position: relative; z-index: 3; color: var(--hero-text); padding: 0; display: inline-block; width: fit-content; margin: -130px auto 0; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.2; font-weight: 700; }
+.hero h1 { position: relative; z-index: 3; color: var(--hero-text); padding: 0; display: inline-block; width: fit-content; margin: -130px auto 0; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: clamp(2.6rem, 5.5vw, 4rem); line-height: 1.08; font-weight: 700; }
 .hero h1::after { content: ""; display: block; width: 80%; height: 2px; background: var(--hero-underline); margin: 18px auto 0; }
 
 .section { background: var(--products-bg); padding-bottom: 0; }
@@ -200,7 +201,7 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .social-inner h2, .social-inner p, .social-links a { color: rgb(110, 67, 77); }
 .social-inner h2 { margin-top: 0; }
 .social-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 24px; }
-.social-links a { font-weight: 700; padding: 12px 20px; border: 1px solid rgba(179, 99, 52, 0.25); border-radius: 999px; background: rgba(179, 99, 52, 0.06); font-size: 1rem; text-decoration: none; transition: all 0.3s ease; }
+.social-links a { font-weight: 700; padding: 12px 20px; border: 1px solid rgba(179, 99, 52, 0.25); border-radius: 999px; background: rgba(179, 99, 52, 0.06); font-size: 1rem; text-decoration: none; transition: all 0.2s ease; }
 .social-links a:hover { background: rgba(179, 99, 52, 0.15); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
 
 .contact-section { background: var(--contact-bg); padding: 70px 0; }
@@ -214,7 +215,7 @@ header, footer, .hero, .section { padding-top: 20px; padding-bottom: 20px; }
 .grid, .features { display: grid; gap: 24px; }
 .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .features { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-.card, .feature { border: 1px solid transparent; border-radius: 8px; overflow: hidden; position: relative; display: block; background: transparent; padding: 0; cursor: pointer; transition: box-shadow 0.3s ease, transform 0.3s ease; }
+.card, .feature { border: 1px solid transparent; border-radius: 8px; overflow: hidden; position: relative; display: block; background: transparent; padding: 0; cursor: pointer; transition: box-shadow 0.2s ease, transform 0.2s ease; }
 .card:hover, .card:focus-visible { box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10); transform: scale(1.02); }
 .card:focus-visible { outline: 2px solid rgba(179, 99, 52, 0.35); outline-offset: 3px; }
 .card:active { transform: scale(0.98); }
