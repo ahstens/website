@@ -240,6 +240,9 @@ function initShopFilters() {
 }
 
 function slugify(name) {
+  // NFD normalization decomposes accented characters (e.g. 'ú' → 'u' + combining accent)
+  // so the subsequent regex can strip the diacritical marks, handling names like
+  // 'Costa Rica Tarrazú' → 'product-costa-rica-tarrazu.html'
   return (
     "product-" +
     name
@@ -330,7 +333,11 @@ async function initShopProducts() {
 }
 
 function pickRandom(arr, n) {
-  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  const shuffled = [...arr];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
   return shuffled.slice(0, n);
 }
 
