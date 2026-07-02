@@ -280,7 +280,8 @@ header, footer, .hero, .section { padding-top: 28px; padding-bottom: 28px; }
 .card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(247,244,239,0.28) 0%, rgba(247,244,239,0.14) 52%, rgba(247,244,239,0) 74%); opacity: 0; pointer-events: none; mix-blend-mode: screen; }
 .card.is-glossy::after { opacity: 1; }
 .card img {
-  width: calc(100% - var(--card-gutter) * 2);
+  width: auto;
+  align-self: stretch;
   margin: var(--card-gutter) var(--card-gutter) 0;
   aspect-ratio: 1 / 1;
   object-fit: cover;
