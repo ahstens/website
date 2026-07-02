@@ -16,6 +16,154 @@ const STRIPE_PRODUCT_ENDPOINT = "/.netlify/functions/get-product";
 const STRIPE_PRODUCTS_ENDPOINT = "/.netlify/functions/list-products";
 let liveProductPrice = null;
 
+const PAGE_REVEAL_SELECTOR = [
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "p",
+  "li",
+  "label",
+  "button",
+  "legend",
+  "summary",
+  "figcaption",
+  "dt",
+  "dd",
+  "blockquote",
+  "span",
+  ".brand-text",
+  ".nav-menu a",
+  ".social-links a",
+  ".read-more",
+  ".checkout-back",
+  ".summary-empty a",
+  ".tracking-link",
+  ".cart-count",
+  ".cart-drawer-header h2",
+  ".cart-empty",
+  ".cart-item-main h3",
+  ".cart-item-size",
+  ".cart-item-price",
+  ".cart-subtotal-label",
+  ".cart-subtotal-amount",
+  ".checkout-back",
+  ".checkout-heading",
+  ".checkout-subheading",
+  ".checkout-panel h2",
+  ".checkout-form-grid legend",
+  ".checkout-form-grid label",
+  ".checkout-secure",
+  ".checkout-btn",
+  ".pay-btn",
+  ".pay-message",
+  ".product-origincat",
+  ".product-title",
+  ".product-description",
+  ".product-price-inline",
+  ".product-add-btn",
+  ".size-label",
+  ".size-option",
+  ".summary-item-name",
+  ".summary-item-meta",
+  ".summary-item-price",
+  ".summary-total-label",
+  ".summary-total-amount",
+  ".tracking-shell h1",
+  ".tracking-shell h2",
+  ".tracking-shell p",
+  ".tracking-form label",
+  ".tracking-form button",
+  ".tracking-message",
+  ".tracking-status",
+  ".return-card h1",
+  ".return-card p",
+  ".btn-primary",
+  ".read-more",
+  ".social-links a",
+  ".shop-filter-btn",
+  ".shop-search",
+  ".newsletter-form button",
+  ".newsletter-form input",
+  ".team-role",
+  ".blog-date",
+  ".blog-category"
+].join(", ");
+
+const PAGE_REVEAL_MEDIA_SELECTOR = "img, svg, video, iframe, .team-image, .return-icon";
+const PAGE_REVEAL_EXCLUDE_SELECTOR = "script, style, meta, link, title, noscript, template, option";
+
+function getRevealRank(el) {
+  if (el.matches(PAGE_REVEAL_MEDIA_SELECTOR)) return 3;
+  if (
+    el.matches(
+      "button, input, select, textarea, .nav-menu a, .social-links a, .read-more, .checkout-back, .summary-empty a, .tracking-link, .btn-primary, .checkout-btn, .pay-btn, .product-add-btn, .shop-filter-btn, .size-option, .newsletter-form button, .tracking-form button"
+    )
+  ) {
+    return 2;
+  }
+  if (el.matches("h1, h2, h3, h4, h5, h6, legend, .brand-text")) return 0;
+  return 1;
+}
+
+function revealPageContent(scope = document) {
+  const root = scope instanceof Element ? scope : document.body;
+  if (!root) return;
+
+  const candidates = [];
+
+  if (root instanceof Element && root.matches(PAGE_REVEAL_SELECTOR)) {
+    candidates.push(root);
+  }
+
+  root.querySelectorAll(PAGE_REVEAL_SELECTOR).forEach((el) => {
+    candidates.push(el);
+  });
+
+  const targets = candidates.filter((el) => {
+    if (!(el instanceof Element)) return false;
+    if (el.dataset.pageRevealApplied === "true") return false;
+    if (el.matches(PAGE_REVEAL_EXCLUDE_SELECTOR)) return false;
+    if (el.hidden || el.closest("[hidden]")) return false;
+    return true;
+  });
+
+  if (targets.length === 0) return;
+
+  const entries = targets
+    .map((el, index) => {
+      const rect = el.getBoundingClientRect();
+      return {
+        el,
+        index,
+        top: rect.top,
+        left: rect.left,
+        band: Math.round(rect.top / 84),
+        rank: getRevealRank(el),
+      };
+    })
+    .sort((a, b) => a.band - b.band || a.rank - b.rank || a.left - b.left || a.index - b.index);
+
+  const bandCounts = new Map();
+
+  entries.forEach(({ el, band, rank }) => {
+    const key = `${band}:${rank}`;
+    const localIndex = bandCounts.get(key) || 0;
+    bandCounts.set(key, localIndex + 1);
+
+    el.dataset.pageRevealApplied = "true";
+    el.classList.add("page-reveal", rank === 3 ? "page-reveal--media" : "page-reveal--text");
+    el.style.setProperty("--reveal-delay", `${Math.min(320, 42 + band * 62 + rank * 32 + localIndex * 14)}ms`);
+    el.style.setProperty("--reveal-duration", rank === 3 ? "300ms" : "420ms");
+  });
+
+  requestAnimationFrame(() => {
+    entries.forEach(({ el }) => el.classList.add("is-visible"));
+  });
+}
+
 // Cart backed by sessionStorage so items persist across page navigations
 const CART_KEY = "keystone_cart";
 
@@ -352,6 +500,7 @@ async function initShopProducts() {
 
   // Apply any active search/filter state after cards are in the DOM
   if (typeof applyShopFilters === "function") applyShopFilters();
+  revealPageContent(grid);
 }
 
 function pickRandom(arr, n) {
@@ -377,6 +526,8 @@ async function initFeaturedProducts() {
   } catch (err) {
     console.warn("Unable to load featured products:", err);
   }
+
+  revealPageContent(grid);
 }
 
 function isCartOpen() {
@@ -544,37 +695,10 @@ document.addEventListener("click", (e) => {
   }
 });
 
-/* Slow top->bottom cascade on all pages */
+/* Page-load reveal cascade */
 window.addEventListener("DOMContentLoaded", () => {
   loadProductImages();
-
-  const main = document.querySelector("main");
-  if (!main) return;
-
-  const targets = Array.from(
-    main.querySelectorAll(
-      ".hero, .section, .company-summary, .social-section, .contact-section, .grid, .features, .card, .product-layout, .product-media, .product-info, .product-title, .product-description, .product-price-inline, .purchase-card, .size-options, .product-add-btn"
-    )
-  );
-
-  if (targets.length === 0) return;
-
-  targets.forEach((el) => el.classList.add("reveal"));
-
-  const ordered = targets
-    .map((el) => ({ el, top: el.getBoundingClientRect().top }))
-    .sort((a, b) => a.top - b.top);
-
-  const baseDelay = 250;
-  const step = 160;
-
-  ordered.forEach(({ el }, idx) => {
-    el.style.transitionDelay = `${baseDelay + idx * step}ms`;
-  });
-
-  requestAnimationFrame(() => {
-    ordered.forEach(({ el }) => el.classList.add("is-visible"));
-  });
+  revealPageContent(document.body);
 
   if (!isProductPage()) showBanner();
 });
