@@ -163,8 +163,8 @@ async function initPayment() {
       <form id="payment-form">
         <fieldset class="checkout-form-grid">
           <legend>Shipping Address</legend>
-          <label>Full Name<input name="shippingName" type="text" autocomplete="shipping name" required /></label>
-          <label>Email<input name="shippingEmail" type="email" autocomplete="shipping email" required /></label>
+          <label>Full Name<input name="shippingName" type="text" autocomplete="name" required /></label>
+          <label>Email<input name="shippingEmail" type="email" autocomplete="email" required /></label>
           <label>Street Address<input name="shippingStreet1" type="text" autocomplete="shipping address-line1" required /></label>
           <label>City<input name="shippingCity" type="text" autocomplete="shipping address-level2" required /></label>
           <label>State<input name="shippingState" type="text" autocomplete="shipping address-level1" required /></label>
@@ -176,8 +176,8 @@ async function initPayment() {
         </label>
         <fieldset id="billingFields" class="checkout-form-grid" hidden>
           <legend>Billing Address</legend>
-          <label>Full Name<input name="billingName" type="text" autocomplete="billing name" /></label>
-          <label>Email<input name="billingEmail" type="email" autocomplete="billing email" /></label>
+          <label>Full Name<input name="billingName" type="text" autocomplete="name" /></label>
+          <label>Email<input name="billingEmail" type="email" autocomplete="email" /></label>
           <label>Street Address<input name="billingStreet1" type="text" autocomplete="billing address-line1" /></label>
           <label>City<input name="billingCity" type="text" autocomplete="billing address-level2" /></label>
           <label>State<input name="billingState" type="text" autocomplete="billing address-level1" /></label>
@@ -227,7 +227,7 @@ async function handleSubmit(event) {
   };
   sessionStorage.setItem(SHIPPING_ADDRESS_KEY, JSON.stringify(toAddress));
 
-  const billingSameAsShipping = document.getElementById("billingSameAsShipping")?.checked !== false;
+  const billingSameAsShipping = document.getElementById("billingSameAsShipping")?.checked ?? true;
   const billingDetails = billingSameAsShipping
     ? toAddress
     : {
