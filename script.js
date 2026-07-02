@@ -131,7 +131,8 @@ function deriveOrigin(name) {
 function formatProductMetadata(product, fallbackSize) {
   const productOrigin = product.metadata?.origin || deriveOrigin(product.name);
   const productSize = product.metadata?.size || fallbackSize;
-  return [product.metadata?.roast, productOrigin, productSize].filter(Boolean).join(", ");
+  const roast = product.metadata?.roast || "";
+  return [roast, productOrigin, productSize].filter(Boolean).join(", ");
 }
 
 function setProductPageFromStripe(product) {

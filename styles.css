@@ -258,7 +258,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 .contact-item:hover { background: rgba(247, 244, 239, 0.12); transform: translateY(-4px); }
 
 .grid, .features { display: grid; gap: 24px; }
-.grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .features { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .card, .feature {
   border: 1px solid rgba(110, 67, 77, 0.14);
@@ -337,7 +337,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   text-align: center;
 }
 .card-body h3 { color: var(--white-text); text-decoration: none; font-size: 1.55rem; line-height: 1.1; margin: 0; letter-spacing: 0.04em; }
-.card-meta { margin: 0; font-weight: 700; color: var(--text); font-size: 0.98rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.card-meta { margin: 0; font-weight: 700; color: var(--text); font-size: 0.98rem; letter-spacing: 0.05em; text-transform: uppercase; }
 .card-price { margin: 0; font-weight: 700; font-family: var(--font-serif); color: rgb(217, 158, 84); font-size: 1.05rem; letter-spacing: 0.08em; }
 .card[hidden] { display: none !important; }
 footer { padding: 24px 0; }
