@@ -13,6 +13,7 @@ const cartSubtotalEl = document.getElementById("cartSubtotal");
 const cartCountEl = document.getElementById("cartCount");
 const addToCartBtn = document.querySelector(".product-add-btn");
 const STRIPE_PRODUCT_ENDPOINT = "/.netlify/functions/get-product";
+const STRIPE_PRODUCTS_ENDPOINT = "/.netlify/functions/list-products";
 let liveProductPrice = null;
 
 // Cart backed by sessionStorage so items persist across page navigations
@@ -143,6 +144,7 @@ function setCardFromStripe(card, product) {
 
   const cardTitleEl = card.querySelector(".card-body h3");
   const cardPriceEl = card.querySelector(".card-body .card-price");
+  const cardImgEl = card.querySelector("img");
 
   if (product.name) {
     card.dataset.name = product.name;
@@ -153,6 +155,11 @@ function setCardFromStripe(card, product) {
     const displayPrice = product.price.display;
     card.dataset.price = displayPrice;
     if (cardPriceEl) cardPriceEl.textContent = `$${displayPrice}`;
+  }
+
+  if (product.image) {
+    card.dataset.image = product.image;
+    if (cardImgEl) cardImgEl.src = product.image;
   }
 }
 
@@ -196,16 +203,19 @@ async function initProductCards() {
   );
 }
 
+let applyShopFilters = null;
+
 function initShopFilters() {
   const searchInput = document.querySelector(".shop-search");
   const filterButtons = Array.from(document.querySelectorAll(".shop-filter-btn"));
-  const cards = Array.from(document.querySelectorAll(".shop-page .card[data-origin]"));
-  if (!searchInput || filterButtons.length === 0 || cards.length === 0) return;
+  if (!searchInput && filterButtons.length === 0) return;
 
   let activeOrigin = "all";
 
-  const applyFilters = () => {
-    const searchValue = searchInput.value.trim().toLowerCase();
+  // Re-queries cards each call so it works with dynamically-rendered cards
+  applyShopFilters = () => {
+    const cards = Array.from(document.querySelectorAll(".shop-page .card[data-origin]"));
+    const searchValue = searchInput ? searchInput.value.trim().toLowerCase() : "";
 
     cards.forEach((card) => {
       const cardName = (card.dataset.name || card.querySelector(".card-body h3")?.textContent || "").toLowerCase();
@@ -216,17 +226,128 @@ function initShopFilters() {
     });
   };
 
-  searchInput.addEventListener("input", applyFilters);
+  if (searchInput) searchInput.addEventListener("input", applyShopFilters);
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
       activeOrigin = (button.dataset.filter || "all").toLowerCase();
       filterButtons.forEach((btn) => btn.classList.toggle("active", btn === button));
-      applyFilters();
+      applyShopFilters();
     });
   });
 
-  applyFilters();
+  applyShopFilters();
+}
+
+function slugify(name) {
+  return (
+    "product-" +
+    name
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") +
+    ".html"
+  );
+}
+
+function deriveOrigin(name) {
+  const lower = name.toLowerCase();
+  if (lower.includes("ethiopia")) return "Ethiopia";
+  if (lower.includes("colombia")) return "Colombia";
+  if (lower.includes("guatemala")) return "Guatemala";
+  if (lower.includes("sumatra")) return "Sumatra";
+  if (lower.includes("costa rica")) return "Costa Rica";
+  if (lower.includes("brazil")) return "Brazil";
+  return "";
+}
+
+async function fetchAllStripeProducts() {
+  const response = await fetch(STRIPE_PRODUCTS_ENDPOINT);
+  if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+  const data = await response.json();
+  return data.products || [];
+}
+
+function createProductCard(product) {
+  const href = product.metadata?.slug || slugify(product.name);
+  const origin = product.metadata?.origin || deriveOrigin(product.name);
+  const image = product.image || "";
+  const price = product.price?.display || "—";
+  const name = product.name || "Product";
+  const size = product.metadata?.size || "12 oz";
+
+  const a = document.createElement("a");
+  a.className = "card";
+  a.href = href;
+  a.dataset.productId = product.id;
+  a.dataset.name = name;
+  a.dataset.price = price;
+  a.dataset.size = size;
+  a.dataset.image = image;
+  if (origin) a.dataset.origin = origin;
+
+  const img = document.createElement("img");
+  img.src = image;
+  img.alt = name;
+
+  const body = document.createElement("div");
+  body.className = "card-body";
+
+  const h3 = document.createElement("h3");
+  h3.textContent = name;
+
+  const p = document.createElement("p");
+  p.className = "card-price";
+  p.textContent = `$${price}`;
+
+  body.appendChild(h3);
+  body.appendChild(p);
+  a.appendChild(img);
+  a.appendChild(body);
+
+  return a;
+}
+
+async function initShopProducts() {
+  const grid = document.getElementById("shop-grid");
+  if (!grid) return;
+
+  try {
+    const products = await fetchAllStripeProducts();
+    grid.innerHTML = "";
+    products.forEach((product) => {
+      grid.appendChild(createProductCard(product));
+    });
+  } catch (err) {
+    console.warn("Unable to load shop products:", err);
+    grid.innerHTML = '<p class="load-error">Unable to load products. Please try again later.</p>';
+  }
+
+  // Apply any active search/filter state after cards are in the DOM
+  if (typeof applyShopFilters === "function") applyShopFilters();
+}
+
+function pickRandom(arr, n) {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
+
+async function initFeaturedProducts() {
+  const grid = document.getElementById("featured-grid");
+  if (!grid) return;
+
+  try {
+    const products = await fetchAllStripeProducts();
+    const featured = pickRandom(products, 3);
+    grid.innerHTML = "";
+    featured.forEach((product) => {
+      grid.appendChild(createProductCard(product));
+    });
+  } catch (err) {
+    console.warn("Unable to load featured products:", err);
+  }
 }
 
 function isCartOpen() {
@@ -433,6 +554,8 @@ window.addEventListener("DOMContentLoaded", () => {
   initProductPageFromStripe();
   initProductCards();
   initShopFilters();
+  initShopProducts();
+  initFeaturedProducts();
 });
 
 renderCart();
