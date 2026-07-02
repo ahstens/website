@@ -216,7 +216,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 .hero h1 { position: relative; z-index: 3; color: var(--hero-text); padding: 0; display: inline-block; width: fit-content; max-width: 100%; margin: -130px auto 0; white-space: normal; overflow-wrap: anywhere; text-align: center; font-family: var(--font-serif); text-transform: uppercase; letter-spacing: 0.05em; font-size: clamp(1.9rem, 3.3vw, 3rem); line-height: 1.05; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.16); }
 .hero h1::after { content: ""; display: block; width: 80%; height: 2px; background: var(--hero-underline); margin: 18px auto 0; }
 
-.section { background: var(--products-bg); padding-bottom: 0; }
+.section { background: var(--products-bg); padding-bottom: 75px; }
 .section h2 { position: relative; padding-bottom: 14px; color: var(--white-text); font-size: clamp(2.1rem, 3vw, 2.8rem); line-height: 1.1; }
 .section h2::after { content: ""; display: block; width: 100%; max-width: 1200px; height: 2px; background: var(--white-text); margin-top: 10px; }
 
