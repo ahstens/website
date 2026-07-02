@@ -290,10 +290,10 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 }
 .card-selection-indicator {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 11px;
-  height: 11px;
+  top: 14px;
+  right: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   border: 1px solid rgba(110, 67, 77, 0.32);
   background: rgba(247, 244, 239, 0.92);

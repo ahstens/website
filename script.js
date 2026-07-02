@@ -170,8 +170,9 @@ function setCardFromStripe(card, product) {
   }
 
   if (cardMetaEl) {
-    const metaParts = [product.metadata?.roast, product.metadata?.origin || deriveOrigin(product.name), product.metadata?.size || card.dataset.size]
-      .filter(Boolean);
+    const productOrigin = product.metadata?.origin || deriveOrigin(product.name);
+    const productSize = product.metadata?.size || card.dataset.size;
+    const metaParts = [product.metadata?.roast, productOrigin, productSize].filter(Boolean);
     cardMetaEl.textContent = metaParts.join(" · ");
   }
 
