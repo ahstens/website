@@ -88,7 +88,6 @@ const PAGE_REVEAL_SELECTOR = [
   ".newsletter-form button",
   ".newsletter-form input",
   ".team-role",
-  ".blog-meta",
   ".blog-date",
   ".blog-category"
 ].join(", ");
@@ -100,7 +99,7 @@ function getRevealRank(el) {
   if (el.matches(PAGE_REVEAL_MEDIA_SELECTOR)) return 3;
   if (
     el.matches(
-      "button, .nav-menu a, .social-links a, .read-more, .checkout-back, .summary-empty a, .tracking-link, .btn-primary, .checkout-btn, .pay-btn, .product-add-btn, .shop-filter-btn, .size-option, .newsletter-form button, .tracking-form button"
+      "button, input, select, textarea, .nav-menu a, .social-links a, .read-more, .checkout-back, .summary-empty a, .tracking-link, .btn-primary, .checkout-btn, .pay-btn, .product-add-btn, .shop-filter-btn, .size-option, .newsletter-form button, .tracking-form button"
     )
   ) {
     return 2;
