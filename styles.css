@@ -402,8 +402,53 @@ footer { padding: 24px 0; }
 .size-option:hover { border-color: rgb(217, 158, 84); background: rgba(217, 158, 84, 0.08); }
 .size-option.active { border-color: rgb(217, 158, 84); background: rgba(217, 158, 84, 0.15); color: rgb(217, 158, 84); }
 .product-add-btn.btn-success { background: rgb(217, 158, 84); color: rgb(110, 67, 77); }
-.reveal { opacity: 0; transform: translateY(14px); transition-property: opacity, transform; transition-duration: 900ms; transition-timing-function: ease; will-change: opacity, transform; }
-.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.page-reveal,
+.reveal {
+  opacity: 0;
+  will-change: opacity, transform;
+  animation-duration: var(--reveal-duration, 420ms);
+  animation-delay: var(--reveal-delay, 0ms);
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
+}
+
+.page-reveal--text,
+.reveal {
+  transform: translate3d(0, -10px, 0);
+  animation-name: pageRevealText;
+}
+
+.page-reveal--media {
+  transform: none;
+  animation-name: pageRevealFade;
+}
+
+.page-reveal.is-visible,
+.reveal.is-visible {
+  animation-play-state: running;
+}
+
+@keyframes pageRevealText {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes pageRevealFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -418,6 +463,13 @@ footer { padding: 24px 0; }
   .card:hover,
   .card:focus-visible {
     transform: none;
+  }
+
+  .page-reveal,
+  .reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
