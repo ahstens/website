@@ -213,7 +213,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 .hero-content { text-align: center; max-width: 1100px; margin: 0 auto; flex-direction: column; align-items: center; position: relative; gap: 0; }
 .hero-stack { position: relative; width: min(700px, 96vw); aspect-ratio: 1 / 1; margin: 0 auto -90px; }
 .hero-stack img.hero-fg { width: 100%; height: auto; display: block; object-fit: contain; }
-.hero h1 { position: relative; z-index: 3; color: var(--hero-text); padding: 0; display: inline-block; width: fit-content; max-width: 100%; margin: -130px auto 0; white-space: normal; overflow-wrap: anywhere; text-align: center; font-family: var(--font-serif); text-transform: uppercase; letter-spacing: 0.075em; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.05; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.16); }
+.hero h1 { position: relative; z-index: 3; color: var(--hero-text); padding: 0; display: inline-block; width: fit-content; max-width: 100%; margin: -130px auto 0; white-space: normal; overflow-wrap: anywhere; text-align: center; font-family: var(--font-serif); text-transform: uppercase; letter-spacing: 0.05em; font-size: clamp(1.9rem, 3.3vw, 3rem); line-height: 1.05; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.16); }
 .hero h1::after { content: ""; display: block; width: 80%; height: 2px; background: var(--hero-underline); margin: 18px auto 0; }
 
 .section { background: var(--products-bg); padding-bottom: 0; }
@@ -337,7 +337,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   text-align: center;
 }
 .card-body h3 { color: var(--white-text); text-decoration: none; font-size: 1.55rem; line-height: 1.1; margin: 0; letter-spacing: 0.04em; }
-.card-meta { margin: 0; font-weight: 700; color: rgba(110, 67, 77, 0.84); font-size: 0.98rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.card-meta { margin: 0; font-weight: 700; color: var(--text); font-size: 0.98rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .card-price { margin: 0; font-weight: 700; font-family: var(--font-serif); color: rgb(217, 158, 84); font-size: 1.05rem; letter-spacing: 0.08em; }
 .card[hidden] { display: none !important; }
 footer { padding: 24px 0; }

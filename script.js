@@ -128,6 +128,12 @@ function deriveOrigin(name) {
   return "";
 }
 
+function formatProductMetadata(product, fallbackSize) {
+  const productOrigin = product.metadata?.origin || deriveOrigin(product.name);
+  const productSize = product.metadata?.size || fallbackSize;
+  return [product.metadata?.roast, productOrigin, productSize].filter(Boolean).join(" · ");
+}
+
 function setProductPageFromStripe(product) {
   if (!product) return;
 
@@ -170,10 +176,7 @@ function setCardFromStripe(card, product) {
   }
 
   if (cardMetaEl) {
-    const productOrigin = product.metadata?.origin || deriveOrigin(product.name);
-    const productSize = product.metadata?.size || card.dataset.size;
-    const metaParts = [product.metadata?.roast, productOrigin, productSize].filter(Boolean);
-    cardMetaEl.textContent = metaParts.join(" · ");
+    cardMetaEl.textContent = formatProductMetadata(product, card.dataset.size);
   }
 
   if (product.image) {
@@ -315,7 +318,7 @@ function createProductCard(product) {
 
   const meta = document.createElement("p");
   meta.className = "card-meta";
-  meta.textContent = [origin, size].filter(Boolean).join(" · ");
+  meta.textContent = formatProductMetadata(product, size);
 
   const p = document.createElement("p");
   p.className = "card-price";
