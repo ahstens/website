@@ -44,7 +44,7 @@ body {
 }
 
 html, body { margin: 0; min-height: 100%; overflow-x: hidden; }
-body { background: var(--products-bg); color: var(--text); font-family: var(--font-serif); font-optical-sizing: auto; padding-top: 96px; font-size: 19px; line-height: 1.75; }
+body { background: rgb(110, 67, 77); color: var(--text); font-family: var(--font-serif); font-optical-sizing: auto; padding-top: 96px; font-size: 19px; line-height: 1.75; }
 
 button, a { -webkit-tap-highlight-color: transparent; text-decoration: none; }
 button:focus, a:focus { outline: none; }
@@ -78,7 +78,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 p, li, .product-description, .about-text p, .team-card p, .blog-card p, .newsletter-inner p, .checkout-subheading, .summary-item-meta, .summary-empty, .checkout-form-grid label, .checkout-checkbox, .checkout-secure {
-  font-size: 1.08rem;
+  font-size: 1.5rem;
   line-height: 1.75;
 }
 
@@ -224,7 +224,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 .summary-inner { text-align: center; max-width: 900px; margin: 0 auto; }
 .company-summary h3, .company-summary p { color: rgb(110, 67, 77); }
 .company-summary h3 { font-size: clamp(2.2rem, 4vw, 3rem); margin-top: 0; line-height: 1.05; }
-.company-summary p { font-size: 1.1rem; text-align: left; margin-left: auto; margin-right: auto; max-width: 62ch; }
+.company-summary p { font-size: 1.5rem; text-align: left; margin-left: auto; margin-right: auto; max-width: 62ch; }
 
 .social-section { background: var(--social-bg); padding: 110px 0; }
 .social-inner { text-align: center; }
@@ -397,7 +397,7 @@ footer { padding: 24px 0; }
 .blog-card:hover .read-more { transform: translateX(4px); }
 .newsletter-section { background: var(--bg); padding: 70px 0; text-align: center; }
 .newsletter-inner h2 { color: var(--hero-text); margin-top: 0; }
-.newsletter-inner p { color: rgb(247, 244, 239); font-size: 1.08rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.newsletter-inner p { color: rgb(247, 244, 239); font-size: 1.5rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
 .newsletter-form { display: flex; gap: 12px; max-width: 500px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
 .newsletter-form input { flex: 1; min-width: 200px; padding: 14px 16px; border: 2px solid rgb(217, 158, 84); border-radius: 8px; background: rgba(247, 244, 239, 0.1); color: rgb(247, 244, 239); font-family: var(--font-serif); font-size: 1rem; transition: all 0.3s ease; }
 .newsletter-form input::placeholder { color: rgba(217, 158, 84, 0.6); }
@@ -473,7 +473,7 @@ footer { padding: 24px 0; }
   body { padding-top: var(--mobile-header-offset); }
   .container { padding: 0 14px; }
   .topbar { gap: 8px; }
-  .brand-text { font-size: 1.1rem; }
+  .brand-text { font-size: 1.5rem; }
   .cart-toggle { width: 44px; height: 44px; }
   .cart-icon { width: 28px; height: 28px; }
   .nav-toggle { width: 64px; height: 48px; }
