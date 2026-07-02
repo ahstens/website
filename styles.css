@@ -188,7 +188,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 .cart-drawer-header h2 { margin: 0; font-size: 1.55rem; color: rgb(217, 158, 84); }
 .cart-close { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: none; background: transparent; cursor: pointer; color: rgb(217, 158, 84); font-size: 1.9rem; line-height: 1; }
 .cart-close:hover { transform: scale(1.1); }
-.cart-drawer-body { padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 28px; flex: 1 1 auto; }
+.cart-drawer-body { padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 28px; flex: 1 1 auto;border-bottom: 2px solid rgb(217, 158, 84); }
 .cart-empty { color: rgb(217, 158, 84); font-size: 1rem; }
 .cart-item { display: grid; grid-template-columns: 80px minmax(0, 1fr) auto; gap: 18px; align-items: start; }
 .cart-item-image { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; display: block; background: rgb(247, 244, 239); }
