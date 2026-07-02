@@ -94,6 +94,14 @@ const PAGE_REVEAL_SELECTOR = [
 
 const PAGE_REVEAL_MEDIA_SELECTOR = "img, svg, video, iframe, .team-image, .return-icon";
 const PAGE_REVEAL_EXCLUDE_SELECTOR = "script, style, meta, link, title, noscript, template, option";
+const PAGE_REVEAL_BASE_DELAY_MS = 80;
+const PAGE_REVEAL_MAX_DELAY_MS = 520;
+const PAGE_REVEAL_BAND_STEP_MS = 78;
+const PAGE_REVEAL_RANK_STEP_MS = 36;
+const PAGE_REVEAL_INDEX_STEP_MS = 14;
+const PAGE_REVEAL_TEXT_DURATION_MS = 680;
+const PAGE_REVEAL_MEDIA_DURATION_MS = 900;
+const PAGE_REVEAL_MEDIA_RANK = 3;
 
 function getRevealRank(el) {
   if (el.matches(PAGE_REVEAL_MEDIA_SELECTOR)) return 3;
@@ -160,9 +168,21 @@ function revealPageContent(scope = document) {
     bandCounts.set(key, localIndex + 1);
 
     el.dataset.pageRevealApplied = "true";
-    el.classList.add("page-reveal", rank === 3 ? "page-reveal--media" : "page-reveal--text");
-    el.style.setProperty("--reveal-delay", `${Math.min(520, 80 + band * 78 + rank * 36 + localIndex * 14)}ms`);
-    el.style.setProperty("--reveal-duration", rank === 3 ? "900ms" : "680ms");
+    el.classList.add("page-reveal", rank === PAGE_REVEAL_MEDIA_RANK ? "page-reveal--media" : "page-reveal--text");
+    el.style.setProperty(
+      "--reveal-delay",
+      `${Math.min(
+        PAGE_REVEAL_MAX_DELAY_MS,
+        PAGE_REVEAL_BASE_DELAY_MS +
+          band * PAGE_REVEAL_BAND_STEP_MS +
+          rank * PAGE_REVEAL_RANK_STEP_MS +
+          localIndex * PAGE_REVEAL_INDEX_STEP_MS
+      )}ms`
+    );
+    el.style.setProperty(
+      "--reveal-duration",
+      rank === PAGE_REVEAL_MEDIA_RANK ? `${PAGE_REVEAL_MEDIA_DURATION_MS}ms` : `${PAGE_REVEAL_TEXT_DURATION_MS}ms`
+    );
   });
 
   requestAnimationFrame(() => {
