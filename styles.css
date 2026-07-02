@@ -315,7 +315,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   width: 100%;
   margin-top: 8px;
   min-height: 240px;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
   object-position: center;
   display: block;
@@ -337,7 +337,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   text-align: center;
 }
 .card-body h3 { color: var(--white-text); text-decoration: none; font-size: 1.55rem; line-height: 1.1; margin: 0; letter-spacing: 0.04em; }
-.card-meta { margin: 0; font-weight: 700; color: rgba(110, 67, 77, 0.84); font-size: 0.98rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.card-meta { margin: 0; font-weight: 700; color: rgba(110, 67, 77, 0.84); font-size: 0.98rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .card-price { margin: 0; font-weight: 700; font-family: var(--font-serif); color: rgb(217, 158, 84); font-size: 1.05rem; letter-spacing: 0.08em; }
 .card[hidden] { display: none !important; }
 footer { padding: 24px 0; }

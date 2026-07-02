@@ -117,6 +117,17 @@ async function fetchStripeProduct(productId) {
   return response.json();
 }
 
+function deriveOrigin(name) {
+  const lower = name.toLowerCase();
+  if (lower.includes("ethiopia")) return "Ethiopia";
+  if (lower.includes("colombia")) return "Colombia";
+  if (lower.includes("guatemala")) return "Guatemala";
+  if (lower.includes("sumatra")) return "Sumatra";
+  if (lower.includes("costa rica")) return "Costa Rica";
+  if (lower.includes("brazil")) return "Brazil";
+  return "";
+}
+
 function setProductPageFromStripe(product) {
   if (!product) return;
 
@@ -260,17 +271,6 @@ function slugify(name) {
       .replace(/^-|-$/g, "") +
     ".html"
   );
-}
-
-function deriveOrigin(name) {
-  const lower = name.toLowerCase();
-  if (lower.includes("ethiopia")) return "Ethiopia";
-  if (lower.includes("colombia")) return "Colombia";
-  if (lower.includes("guatemala")) return "Guatemala";
-  if (lower.includes("sumatra")) return "Sumatra";
-  if (lower.includes("costa rica")) return "Costa Rica";
-  if (lower.includes("brazil")) return "Brazil";
-  return "";
 }
 
 async function fetchAllStripeProducts() {
