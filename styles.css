@@ -283,7 +283,8 @@ header, footer, .hero, .section { padding-top: 28px; padding-bottom: 28px; }
   width: calc(100% - var(--card-gutter) * 2);
   margin: var(--card-gutter) var(--card-gutter) 0;
   aspect-ratio: 1 / 1;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
   display: block;
   background: var(--products-bg);
   border: 1px solid rgba(110, 67, 77, 0.08);
