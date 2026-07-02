@@ -269,7 +269,7 @@ header, footer, .hero, .section { padding-top: 28px; padding-bottom: 28px; }
   flex-direction: column;
   height: 100%;
   background: var(--products-bg);
-  padding: 0;
+  padding: 0 var(--card-gutter);
   cursor: pointer;
   box-shadow: 0 12px 26px rgba(110, 67, 77, 0.08);
   transition: var(--transition-card);
@@ -280,9 +280,8 @@ header, footer, .hero, .section { padding-top: 28px; padding-bottom: 28px; }
 .card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(247,244,239,0.28) 0%, rgba(247,244,239,0.14) 52%, rgba(247,244,239,0) 74%); opacity: 0; pointer-events: none; mix-blend-mode: screen; }
 .card.is-glossy::after { opacity: 1; }
 .card img {
-  width: auto;
-  align-self: stretch;
-  margin: var(--card-gutter) var(--card-gutter) 0;
+  width: 100%;
+  margin-top: var(--card-gutter);
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center;
@@ -291,7 +290,7 @@ header, footer, .hero, .section { padding-top: 28px; padding-bottom: 28px; }
   border: 1px solid rgba(110, 67, 77, 0.08);
   border-radius: 14px;
 }
-.card-body { padding: var(--card-body-padding-top) var(--card-body-padding-x) var(--card-body-padding-bottom); background: transparent; display: flex; flex-direction: column; gap: 8px; }
+.card-body { padding: var(--card-body-padding-top) 0 var(--card-body-padding-bottom); background: transparent; display: flex; flex-direction: column; gap: 8px; }
 .card-body h3 { color: var(--white-text); text-decoration: none; font-size: 1.35rem; line-height: 1.15; margin: 0; }
 .card-price { margin: 0; font-weight: 700; font-family: Arial, Helvetica, sans-serif; color: rgb(110, 67, 77); font-size: 1.08rem; letter-spacing: 0.04em; }
 .card[hidden] { display: none !important; }
