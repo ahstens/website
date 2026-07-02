@@ -89,7 +89,7 @@ p, li, .product-description, .about-text p, .team-card p, .blog-card p, .newslet
 
 .site-header, .site-header * { color: var(--banner-text); }
 .site-header a, .site-header p, .site-header span, .site-header h1, .site-header h2, .site-header h3, .site-header button {
-  color: var(--banner-text);
+  color: var(--banner-text); uppercase;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
 }
 
