@@ -117,8 +117,14 @@ function revealPageContent(scope = document) {
   if (root instanceof Element && root.matches(PAGE_REVEAL_SELECTOR)) {
     candidates.push(root);
   }
+  if (root instanceof Element && root.matches(PAGE_REVEAL_MEDIA_SELECTOR)) {
+    candidates.push(root);
+  }
 
   root.querySelectorAll(PAGE_REVEAL_SELECTOR).forEach((el) => {
+    candidates.push(el);
+  });
+  root.querySelectorAll(PAGE_REVEAL_MEDIA_SELECTOR).forEach((el) => {
     candidates.push(el);
   });
 
@@ -155,8 +161,8 @@ function revealPageContent(scope = document) {
 
     el.dataset.pageRevealApplied = "true";
     el.classList.add("page-reveal", rank === 3 ? "page-reveal--media" : "page-reveal--text");
-    el.style.setProperty("--reveal-delay", `${Math.min(320, 42 + band * 62 + rank * 32 + localIndex * 14)}ms`);
-    el.style.setProperty("--reveal-duration", rank === 3 ? "300ms" : "420ms");
+    el.style.setProperty("--reveal-delay", `${Math.min(520, 80 + band * 78 + rank * 36 + localIndex * 14)}ms`);
+    el.style.setProperty("--reveal-duration", rank === 3 ? "900ms" : "680ms");
   });
 
   requestAnimationFrame(() => {

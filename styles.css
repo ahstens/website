@@ -404,7 +404,7 @@ footer { padding: 24px 0; }
 .reveal {
   opacity: 0;
   will-change: opacity, transform;
-  animation-duration: var(--reveal-duration, 420ms);
+  animation-duration: var(--reveal-duration, 680ms);
   animation-delay: var(--reveal-delay, 0ms);
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   animation-fill-mode: both;
