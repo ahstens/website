@@ -143,6 +143,7 @@ function setCardFromStripe(card, product) {
   if (!card || !product) return;
 
   const cardTitleEl = card.querySelector(".card-body h3");
+  const cardMetaEl = card.querySelector(".card-body .card-meta");
   const cardPriceEl = card.querySelector(".card-body .card-price");
   const cardImgEl = card.querySelector("img");
 
@@ -155,6 +156,12 @@ function setCardFromStripe(card, product) {
     const displayPrice = product.price.display;
     card.dataset.price = displayPrice;
     if (cardPriceEl) cardPriceEl.textContent = `$${displayPrice}`;
+  }
+
+  if (cardMetaEl) {
+    const metaParts = [product.metadata?.roast, product.metadata?.origin || deriveOrigin(product.name), product.metadata?.size || card.dataset.size]
+      .filter(Boolean);
+    cardMetaEl.textContent = metaParts.join(" · ");
   }
 
   if (product.image) {
@@ -295,18 +302,28 @@ function createProductCard(product) {
   img.src = image;
   img.alt = name;
 
+  const indicator = document.createElement("span");
+  indicator.className = "card-selection-indicator";
+  indicator.setAttribute("aria-hidden", "true");
+
   const body = document.createElement("div");
   body.className = "card-body";
 
   const h3 = document.createElement("h3");
   h3.textContent = name;
 
+  const meta = document.createElement("p");
+  meta.className = "card-meta";
+  meta.textContent = [origin, size].filter(Boolean).join(" · ");
+
   const p = document.createElement("p");
   p.className = "card-price";
   p.textContent = `$${price}`;
 
   body.appendChild(h3);
+  body.appendChild(meta);
   body.appendChild(p);
+  a.appendChild(indicator);
   a.appendChild(img);
   a.appendChild(body);
 
