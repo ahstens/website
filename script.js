@@ -93,6 +93,7 @@ const PAGE_REVEAL_SELECTOR = [
 ].join(", ");
 
 const PAGE_REVEAL_MEDIA_SELECTOR = "img, svg, video, iframe, .team-image, .return-icon";
+const PAGE_REVEAL_ALL_SELECTOR = `${PAGE_REVEAL_SELECTOR}, ${PAGE_REVEAL_MEDIA_SELECTOR}`;
 const PAGE_REVEAL_EXCLUDE_SELECTOR = "script, style, meta, link, title, noscript, template, option";
 const PAGE_REVEAL_BASE_DELAY_MS = 80;
 const PAGE_REVEAL_MAX_DELAY_MS = 520;
@@ -104,7 +105,7 @@ const PAGE_REVEAL_MEDIA_DURATION_MS = 900;
 const PAGE_REVEAL_MEDIA_RANK = 3;
 
 function getRevealRank(el) {
-  if (el.matches(PAGE_REVEAL_MEDIA_SELECTOR)) return 3;
+  if (el.matches(PAGE_REVEAL_MEDIA_SELECTOR)) return PAGE_REVEAL_MEDIA_RANK;
   if (
     el.matches(
       "button, input, select, textarea, .nav-menu a, .social-links a, .read-more, .checkout-back, .summary-empty a, .tracking-link, .btn-primary, .checkout-btn, .pay-btn, .product-add-btn, .shop-filter-btn, .size-option, .newsletter-form button, .tracking-form button"
@@ -122,17 +123,11 @@ function revealPageContent(scope = document) {
 
   const candidates = [];
 
-  if (root instanceof Element && root.matches(PAGE_REVEAL_SELECTOR)) {
-    candidates.push(root);
-  }
-  if (root instanceof Element && root.matches(PAGE_REVEAL_MEDIA_SELECTOR)) {
+  if (root instanceof Element && root.matches(PAGE_REVEAL_ALL_SELECTOR)) {
     candidates.push(root);
   }
 
-  root.querySelectorAll(PAGE_REVEAL_SELECTOR).forEach((el) => {
-    candidates.push(el);
-  });
-  root.querySelectorAll(PAGE_REVEAL_MEDIA_SELECTOR).forEach((el) => {
+  root.querySelectorAll(PAGE_REVEAL_ALL_SELECTOR).forEach((el) => {
     candidates.push(el);
   });
 
