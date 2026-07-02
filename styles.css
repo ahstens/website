@@ -30,22 +30,6 @@ img, video, iframe { max-width: 100%; height: auto; }
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
 }
 
-/* Crinkled paper texture overlay */
-html::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image:
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="250" height="250"><filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%25" height="100%25" filter="url(%23paper)" opacity="0.05"/></svg>');
-  background-attachment: fixed;
-  pointer-events: none;
-  z-index: 1;
-  mix-blend-mode: overlay;
-}
-
 body {
   position: relative;
   z-index: 0;
@@ -219,7 +203,7 @@ header, footer, .hero, .section { padding-top: 28px; padding-bottom: 28px; }
 .hero-content { text-align: center; max-width: 1100px; margin: 0 auto; flex-direction: column; align-items: center; position: relative; gap: 0; }
 .hero-stack { position: relative; width: min(700px, 96vw); aspect-ratio: 1 / 1; margin: 0 auto -90px; }
 .hero-stack img.hero-fg { width: 100%; height: auto; display: block; object-fit: contain; }
-.hero h1 { position: relative; z-index: 3; color: var(--hero-text); padding: 0; display: inline-block; width: fit-content; margin: -130px auto 0; white-space: normal; overflow-wrap: anywhere; text-align: center; font-family: var(--font-serif); text-transform: uppercase; letter-spacing: 0.24em; font-size: clamp(2.5rem, 9vw, 4rem); line-height: 1.1; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.16); }
+.hero h1 { position: relative; z-index: 3; color: var(--hero-text); padding: 0; display: inline-block; width: fit-content; margin: -130px auto 0; white-space: normal; overflow-wrap: anywhere; text-align: center; font-family: var(--font-serif); text-transform: uppercase; letter-spacing: 0.075em; font-size: clamp(2.5rem, 9vw, 4rem); line-height: 1.1; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.16); }
 .hero h1::after { content: ""; display: block; width: 80%; height: 2px; background: var(--hero-underline); margin: 18px auto 0; }
 
 .section { background: var(--products-bg); padding-bottom: 0; }
