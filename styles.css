@@ -288,17 +288,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   border-color: rgba(217, 158, 84, 0.72);
   box-shadow: inset 0 0 0 1px rgba(217, 158, 84, 0.18), 0 14px 28px rgba(110, 67, 77, 0.1);
 }
-.card-selection-indicator {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 1px solid rgba(110, 67, 77, 0.32);
-  background: rgba(247, 244, 239, 0.92);
-  box-shadow: inset 0 0 0 2px rgba(247, 244, 239, 0.9);
-  transition: var(--transition-card);
+
 }
 .card:hover .card-selection-indicator,
 .card:focus-visible .card-selection-indicator {
