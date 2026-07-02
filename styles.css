@@ -288,8 +288,6 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   border-color: rgba(217, 158, 84, 0.72);
   box-shadow: inset 0 0 0 1px rgba(217, 158, 84, 0.18), 0 14px 28px rgba(110, 67, 77, 0.1);
 }
-
-}
 .card:hover .card-selection-indicator,
 .card:focus-visible .card-selection-indicator {
   border-color: rgba(217, 158, 84, 0.6);
