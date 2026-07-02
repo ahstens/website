@@ -117,6 +117,24 @@ async function fetchStripeProduct(productId) {
   return response.json();
 }
 
+function deriveOrigin(name) {
+  const lower = name.toLowerCase();
+  if (lower.includes("ethiopia")) return "Ethiopia";
+  if (lower.includes("colombia")) return "Colombia";
+  if (lower.includes("guatemala")) return "Guatemala";
+  if (lower.includes("sumatra")) return "Sumatra";
+  if (lower.includes("costa rica")) return "Costa Rica";
+  if (lower.includes("brazil")) return "Brazil";
+  return "";
+}
+
+function formatProductMetadata(product, fallbackSize) {
+  const productOrigin = product.metadata?.origin || deriveOrigin(product.name);
+  const productSize = product.metadata?.size || fallbackSize;
+  const roast = product.metadata?.roast || "";
+  return [roast, productOrigin, productSize].filter(Boolean).join(", ");
+}
+
 function setProductPageFromStripe(product) {
   if (!product) return;
 
@@ -143,6 +161,7 @@ function setCardFromStripe(card, product) {
   if (!card || !product) return;
 
   const cardTitleEl = card.querySelector(".card-body h3");
+  const cardMetaEl = card.querySelector(".card-body .card-meta");
   const cardPriceEl = card.querySelector(".card-body .card-price");
   const cardImgEl = card.querySelector("img");
 
@@ -155,6 +174,10 @@ function setCardFromStripe(card, product) {
     const displayPrice = product.price.display;
     card.dataset.price = displayPrice;
     if (cardPriceEl) cardPriceEl.textContent = `$${displayPrice}`;
+  }
+
+  if (cardMetaEl) {
+    cardMetaEl.textContent = formatProductMetadata(product, card.dataset.size);
   }
 
   if (product.image) {
@@ -255,17 +278,6 @@ function slugify(name) {
   );
 }
 
-function deriveOrigin(name) {
-  const lower = name.toLowerCase();
-  if (lower.includes("ethiopia")) return "Ethiopia";
-  if (lower.includes("colombia")) return "Colombia";
-  if (lower.includes("guatemala")) return "Guatemala";
-  if (lower.includes("sumatra")) return "Sumatra";
-  if (lower.includes("costa rica")) return "Costa Rica";
-  if (lower.includes("brazil")) return "Brazil";
-  return "";
-}
-
 async function fetchAllStripeProducts() {
   const response = await fetch(STRIPE_PRODUCTS_ENDPOINT);
   if (!response.ok) throw new Error(`Request failed: ${response.status}`);
@@ -295,18 +307,28 @@ function createProductCard(product) {
   img.src = image;
   img.alt = name;
 
+  const indicator = document.createElement("span");
+  indicator.className = "card-selection-indicator";
+  indicator.setAttribute("aria-hidden", "true");
+
   const body = document.createElement("div");
   body.className = "card-body";
 
   const h3 = document.createElement("h3");
   h3.textContent = name;
 
+  const meta = document.createElement("p");
+  meta.className = "card-meta";
+  meta.textContent = formatProductMetadata(product, size);
+
   const p = document.createElement("p");
   p.className = "card-price";
   p.textContent = `$${price}`;
 
   body.appendChild(h3);
+  body.appendChild(meta);
   body.appendChild(p);
+  a.appendChild(indicator);
   a.appendChild(img);
   a.appendChild(body);
 
