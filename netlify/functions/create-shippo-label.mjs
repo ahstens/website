@@ -94,6 +94,7 @@ export default async (req) => {
       zip: '75001',
       country: 'US',
       phone: '5551234567',
+      email: (Netlify.env.get('SHIPPO_FROM_EMAIL') || 'orders@keystonecoffee.com').trim(),
     };
 
     const parcelWeight = calculateParcelWeight(items);

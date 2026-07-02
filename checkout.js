@@ -1,5 +1,6 @@
 // Standalone, themed Stripe checkout page (Payment Element).
 const CART_KEY = "keystone_cart";
+const SHIPPING_ADDRESS_KEY = "keystone_shipping_address";
 
 function loadCart() {
   try {
@@ -160,20 +161,48 @@ async function initPayment() {
 
     paymentArea.innerHTML = `
       <form id="payment-form">
-        <div id="link-authentication-element"></div>
+        <fieldset class="checkout-form-grid">
+          <legend>Shipping Address</legend>
+          <label>Full Name<input name="shippingName" type="text" autocomplete="name" required /></label>
+          <label>Email<input name="shippingEmail" type="email" autocomplete="email" required /></label>
+          <label>Street Address<input name="shippingStreet1" type="text" autocomplete="shipping address-line1" required /></label>
+          <label>City<input name="shippingCity" type="text" autocomplete="shipping address-level2" required /></label>
+          <label>State<input name="shippingState" type="text" autocomplete="shipping address-level1" required /></label>
+          <label>ZIP Code<input name="shippingZip" type="text" autocomplete="shipping postal-code" required /></label>
+        </fieldset>
+        <label class="checkout-checkbox">
+          <input id="billingSameAsShipping" type="checkbox" checked />
+          Billing address is the same as shipping
+        </label>
+        <fieldset id="billingFields" class="checkout-form-grid" hidden>
+          <legend>Billing Address</legend>
+          <label>Full Name<input name="billingName" type="text" autocomplete="name" /></label>
+          <label>Email<input name="billingEmail" type="email" autocomplete="email" /></label>
+          <label>Street Address<input name="billingStreet1" type="text" autocomplete="billing address-line1" /></label>
+          <label>City<input name="billingCity" type="text" autocomplete="billing address-level2" /></label>
+          <label>State<input name="billingState" type="text" autocomplete="billing address-level1" /></label>
+          <label>ZIP Code<input name="billingZip" type="text" autocomplete="billing postal-code" /></label>
+        </fieldset>
         <div id="payment-element"></div>
         <button id="payBtn" class="pay-btn" type="submit">Pay now</button>
         <p id="payMessage" class="pay-message" role="alert"></p>
         <p class="checkout-secure">&#128274; Payments are securely processed by Stripe.</p>
       </form>`;
 
-    const linkAuth = elements.create("linkAuthentication");
-    linkAuth.mount("#link-authentication-element");
-
     const paymentElement = elements.create("payment", { layout: "tabs" });
     paymentElement.mount("#payment-element");
 
     document.getElementById("payment-form").addEventListener("submit", handleSubmit);
+    const billingSameCheckbox = document.getElementById("billingSameAsShipping");
+    const billingFieldset = document.getElementById("billingFields");
+    const billingInputs = billingFieldset.querySelectorAll("input");
+    billingSameCheckbox.addEventListener("change", () => {
+      const showBillingFields = !billingSameCheckbox.checked;
+      billingFieldset.hidden = !showBillingFields;
+      billingInputs.forEach((input) => {
+        input.required = showBillingFields;
+      });
+    });
   } catch (err) {
     renderPaymentError(err.message || "Something went wrong while preparing checkout.");
   }
@@ -184,6 +213,32 @@ let submitting = false;
 async function handleSubmit(event) {
   event.preventDefault();
   if (submitting || !stripe || !elements) return;
+
+  const form = document.getElementById("payment-form");
+  const formData = new FormData(form);
+  const toAddress = {
+    name: String(formData.get("shippingName") || "").trim(),
+    street1: String(formData.get("shippingStreet1") || "").trim(),
+    city: String(formData.get("shippingCity") || "").trim(),
+    state: String(formData.get("shippingState") || "").trim(),
+    zip: String(formData.get("shippingZip") || "").trim(),
+    country: "US",
+    email: String(formData.get("shippingEmail") || "").trim(),
+  };
+  sessionStorage.setItem(SHIPPING_ADDRESS_KEY, JSON.stringify(toAddress));
+
+  const billingSameAsShipping = document.getElementById("billingSameAsShipping")?.checked ?? true;
+  const billingDetails = billingSameAsShipping
+    ? toAddress
+    : {
+        name: String(formData.get("billingName") || "").trim(),
+        street1: String(formData.get("billingStreet1") || "").trim(),
+        city: String(formData.get("billingCity") || "").trim(),
+        state: String(formData.get("billingState") || "").trim(),
+        zip: String(formData.get("billingZip") || "").trim(),
+        country: "US",
+        email: String(formData.get("billingEmail") || "").trim(),
+      };
 
   submitting = true;
   const payBtn = document.getElementById("payBtn");
@@ -196,6 +251,29 @@ async function handleSubmit(event) {
     elements,
     confirmParams: {
       return_url: `${window.location.origin}/checkout-return.html`,
+      shipping: {
+        name: toAddress.name,
+        address: {
+          line1: toAddress.street1,
+          city: toAddress.city,
+          state: toAddress.state,
+          postal_code: toAddress.zip,
+          country: toAddress.country,
+        },
+      },
+      payment_method_data: {
+        billing_details: {
+          name: billingDetails.name,
+          email: billingDetails.email,
+          address: {
+            line1: billingDetails.street1,
+            city: billingDetails.city,
+            state: billingDetails.state,
+            postal_code: billingDetails.zip,
+            country: billingDetails.country,
+          },
+        },
+      },
     },
   });
 
