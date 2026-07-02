@@ -531,7 +531,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const targets = Array.from(
     main.querySelectorAll(
-      ".hero, .section, .company-summary, .social-section, .contact-section, .grid, .features, .card, .product-layout, .product-media, .product-info, .product-title, .product-description, .produc[...]"
+      ".hero, .section, .company-summary, .social-section, .contact-section, .grid, .features, .card, .product-layout, .product-media, .product-info, .product-title, .product-description, .product-price-inline, .purchase-card, .size-options, .product-add-btn"
     )
   );
 
