@@ -12,9 +12,9 @@ img, video, iframe { max-width: 100%; height: auto; }
 
 :root {
   --text: rgb(110, 67, 77);
-  --bg: var(--texture-bg-red);
-  --banner: var(--texture-bg-red);
-  --products-bg: var(--texture-bg-white);
+  --bg: transparent;
+  --banner: transparent;
+  --products-bg: transparent;
   --white: var(--texture-white-color);
   --texture-red-color: rgb(110, 67, 77);
   --texture-white-color: rgb(247, 244, 239);
@@ -23,9 +23,9 @@ img, video, iframe { max-width: 100%; height: auto; }
   --vine-tint: sepia(1) saturate(3) hue-rotate(330deg) brightness(0.9) contrast(1.1);
   --vine-color: rgb(217, 158, 84);
   --vine-worn: sepia(0.9) saturate(2.2) hue-rotate(82deg) brightness(0.78) contrast(1.25) opacity(0.88);
-  --summary-bg: rgb(217, 158, 84);
-  --social-bg: var(--texture-bg-white);
-  --contact-bg: var(--texture-bg-red);
+  --summary-bg: transparent;
+  --social-bg: transparent;
+  --contact-bg: transparent;
   --contact-text: rgb(247, 244, 239);
   --white-text: rgb(110, 67, 77);
   --hero-text: rgb(217, 158, 84);
@@ -48,7 +48,7 @@ body {
 }
 
 html, body { margin: 0; min-height: 100%; overflow-x: hidden; }
-body { background: var(--bg); color: var(--text); font-family: var(--font-serif); font-optical-sizing: auto; padding-top: 96px; font-size: 19px; line-height: 1.75; }
+body { background: transparent; color: var(--text); font-family: var(--font-serif); font-optical-sizing: auto; padding-top: 96px; font-size: 19px; line-height: 1.75; }
 
 button, a { -webkit-tap-highlight-color: transparent; text-decoration: none; }
 button:focus, a:focus { outline: none; }
@@ -158,7 +158,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 .nav-menu {
   position: absolute; right: 0; top: 104px;
   display: flex; flex-direction: column; min-width: 180px; padding: 10px 0;
-  background: var(--bg); border: 2px solid rgb(217, 158, 84);
+  border: 2px solid rgb(217, 158, 84);
   opacity: 0; transform: translateY(-8px); pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease; z-index: 10;
 }
@@ -176,7 +176,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 .cart-overlay { position: fixed; inset: 0; background: rgba(110, 67, 77, 0.45); z-index: 9997; }
 .cart-drawer {
   position: fixed; top: 0; right: 0; width: min(460px, 100vw); height: 100vh;
-  background: var(--texture-bg-red); transform: translateX(100%);
+  transform: translateX(100%);
   transition: transform 250ms ease; z-index: 9998; display: flex; flex-direction: column;
   box-shadow: -8px 0 18px rgba(110, 67, 77, 0.18); color: rgb(217, 158, 84);
 }
@@ -195,7 +195,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 .cart-drawer-body { padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 28px; flex: 1 1 auto;border-bottom: 2px solid rgb(217, 158, 84); }
 .cart-empty { color: rgb(217, 158, 84); font-size: 1rem; }
 .cart-item { display: grid; grid-template-columns: 80px minmax(0, 1fr) auto; gap: 18px; align-items: start; }
-.cart-item-image { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; display: block; background: var(--texture-bg-white); }
+.cart-item-image { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; display: block; }
 .cart-item-main h3 { margin: 0; font-size: 1.08rem; color: rgb(217, 158, 84); }
 .cart-item-size { margin: 6px 0 12px; font-size: 0.95rem; color: rgb(217, 158, 84); }
 .quantity-selector { display: inline-flex; align-items: center; border: 1px solid rgb(217, 158, 84); border-radius: 8px; overflow: hidden; }
@@ -336,7 +336,7 @@ footer { padding: 24px 0; }
 
 .shop-page { background: var(--products-bg); padding: 60px 0 96px; }
 .shop-controls { padding: 0 0 28px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
-.shop-search { padding: 12px 16px; border: 2px solid rgba(110, 67, 77, 0.3); border-radius: 8px; font-family: var(--font-serif); font-size: 1rem; color: rgb(110, 67, 77); background: var(--texture-bg-white); min-width: 220px; flex: 1; }
+.shop-search { padding: 12px 16px; border: 2px solid rgba(110, 67, 77, 0.3); border-radius: 8px; font-family: var(--font-serif); font-size: 1rem; color: rgb(110, 67, 77); min-width: 220px; flex: 1; }
 .shop-search:focus { border-color: rgb(110, 67, 77); outline: none; }
 .shop-filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
 .shop-filter-btn { padding: 8px 18px; border: 2px solid rgb(110, 67, 77); border-radius: 999px; background: transparent; color: rgb(110, 67, 77); font-family: var(--font-serif); font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; }
@@ -347,7 +347,7 @@ footer { padding: 24px 0; }
 .product-page-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 .product-layout { display: grid; grid-template-columns: 55% 45%; gap: 52px; align-items: center; padding: 0 10px; }
 .product-media { display: flex; justify-content: flex-end; }
-.product-media img { width: 70%; max-width: 420px; display: block; border-radius: 18px; object-fit: cover; padding: 12px; background: var(--texture-bg-white); }
+.product-media img { width: 70%; max-width: 420px; display: block; border-radius: 18px; object-fit: cover; padding: 12px; }
 .product-info { padding-right: 6px; max-width: 520px; }
 .product-origincat { color: rgb(217, 158, 84); font-size: 0.85rem; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 18px; }
 .product-title { margin: 0 0 22px; color: rgb(217, 158, 84); font-family: var(--font-serif); font-size: clamp(3.8rem, 5vw, 4.5rem); line-height: 0.98; }
@@ -368,7 +368,7 @@ footer { padding: 24px 0; }
 .values-list li:hover { padding-left: 8px; color: rgb(217, 158, 84); }
 .team-section { background: var(--products-bg); padding: 60px 0; }
 .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; margin-top: 40px; }
-.team-card { background: var(--texture-bg-white); padding: 30px; border-radius: 12px; text-align: center; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(110, 67, 77, 0.08); }
+.team-card { padding: 30px; border-radius: 12px; text-align: center; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(110, 67, 77, 0.08); }
 .team-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(110, 67, 77, 0.15); }
 .team-image { font-size: 4rem; margin-bottom: 16px; transition: transform 0.3s ease; }
 .team-card:hover .team-image { transform: scale(1.1); }
@@ -377,7 +377,7 @@ footer { padding: 24px 0; }
 .team-card p { color: var(--text); line-height: 1.6; margin: 0; }
 .blog-section { background: var(--products-bg); padding: 60px 0; }
 .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 40px; }
-.blog-card { background: var(--texture-bg-white); padding: 28px; border-radius: 10px; box-shadow: 0 4px 12px rgba(110, 67, 77, 0.08); transition: all 0.3s ease; display: flex; flex-direction: column; }
+.blog-card { padding: 28px; border-radius: 10px; box-shadow: 0 4px 12px rgba(110, 67, 77, 0.08); transition: all 0.3s ease; display: flex; flex-direction: column; }
 .blog-card:hover { transform: translateY(-6px); box-shadow: 0 12px 24px rgba(110, 67, 77, 0.15); }
 .blog-meta { display: flex; gap: 12px; margin-bottom: 16px; font-size: 0.85rem; }
 .blog-date { color: rgb(217, 158, 84); font-weight: 600; }
