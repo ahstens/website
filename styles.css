@@ -44,7 +44,7 @@ body {
 }
 
 html, body { margin: 0; min-height: 100%; overflow-x: hidden; }
-body { background: var(--texture-bg-red); color: var(--text); font-family: var(--font-serif); font-optical-sizing: auto; padding-top: 96px; font-size: 19px; line-height: 1.75; }
+body { color: var(--text); font-family: var(--font-serif); font-optical-sizing: auto; padding-top: 96px; font-size: 19px; line-height: 1.75; }
 
 button, a { -webkit-tap-highlight-color: transparent; text-decoration: none; }
 button:focus, a:focus { outline: none; }
