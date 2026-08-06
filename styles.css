@@ -12,7 +12,7 @@ img, video, iframe { max-width: 100%; height: auto; }
 
 :root {
   --text: rgb(110, 67, 77);
-  --texture-bg-red: url("assets/images/red.png") 5000px auto repeat,transparent;
+  --texture-bg-red: url("assets/images/red.png") center top / 5000px auto repeat,transparent;
   --texture-bg-white: url("assets/images/white.png") center top / 640px auto repeat, transparent;
   --texture-bg-yellow: url("assets/images/Yellow.png") center top / 640px auto repeat, transparent;
   --bg: var(--texture-bg-red);
