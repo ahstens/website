@@ -12,17 +12,13 @@ img, video, iframe { max-width: 100%; height: auto; }
 
 :root {
   --text: rgb(110, 67, 77);
-  --texture-red-color: rgb(110, 67, 77);
-  --texture-white-color: rgb(247, 244, 239);
-  --texture-bg-red: url("assets/images/image2-red-texture.svg") center top / 640px auto repeat, var(--texture-red-color);
-  --texture-bg-white: url("assets/images/image1-white-texture.svg") center top / 640px auto repeat, var(--texture-white-color);
+  --texture-bg-red: url("assets/images/red.png") center top / 640px auto repeat, transparent;
+  --texture-bg-white: url("assets/images/white.png") center top / 640px auto repeat, transparent;
+  --texture-bg-yellow: url("assets/images/yellow.png") center top / 640px auto repeat, transparent;
   --bg: var(--texture-bg-red);
   --banner: var(--texture-bg-red);
   --products-bg: var(--texture-bg-white);
   --white: rgb(247, 244, 239);
-  --vine-tint: sepia(1) saturate(3) hue-rotate(330deg) brightness(0.9) contrast(1.1);
-  --vine-color: rgb(217, 158, 84);
-  --vine-worn: sepia(0.9) saturate(2.2) hue-rotate(82deg) brightness(0.78) contrast(1.25) opacity(0.88);
   --summary-bg: rgb(217, 158, 84);
   --social-bg: var(--texture-bg-white);
   --contact-bg: var(--texture-bg-red);
