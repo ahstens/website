@@ -86,7 +86,7 @@ p, li, .product-description, .about-text p, .team-card p, .blog-card p, .newslet
 
 .banner {
   background: var(--banner);
-  border-bottom: 2px solid rgba(217, 158, 84);
+  border-bottom: 6px solid rgba(217, 158, 84);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
   position: fixed;
   top: 0; left: 0; width: 100%;
