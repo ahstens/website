@@ -19,7 +19,7 @@ img, video, iframe { max-width: 100%; height: auto; }
   --banner: var(--texture-bg-red);
   --products-bg: var(--texture-bg-white);
   --white: rgb(247, 244, 239);
-  --summary-bg: var(texture-bg-yellow);
+  --summary-bg: var(--texture-bg-yellow);
   --social-bg: var(--texture-bg-white);
   --contact-bg: var(--texture-bg-red);
   --contact-text: rgb(247, 244, 239);
