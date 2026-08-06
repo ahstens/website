@@ -14,7 +14,7 @@ img, video, iframe { max-width: 100%; height: auto; }
   --text: rgb(110, 67, 77);
   --texture-bg-red: url("assets/images/red.png") center top / cover no-repeat; 
   --texture-bg-white: url("assets/images/white.png") center top / cover no-repeat;
-  --texture-bg-yellow: url("assets/images/Yellow.png") center top / cover no-repeat;
+  --texture-bg-yellow: url("assets/images/yellow.png") center top / cover no-repeat;
   --bg: var(--texture-bg-red);
   --banner: var(--texture-bg-red);
   --products-bg: var(--texture-bg-white);
