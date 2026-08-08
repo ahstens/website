@@ -214,8 +214,8 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 .bg-transition {
   position: relative;
   z-index: 1;
-  height: 50px;
-  margin-top: -50px;
+  height: 25px;
+  margin-top: -25px;
   pointer-events: none;
 }
 
@@ -227,8 +227,20 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   background-repeat: no-repeat;
   background-position: center top;
   background-size: 100% auto;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 100%);
-  mask-image: linear-gradient(to bottom, transparent, black 100%);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 10%,
+    rgba(0, 0, 0, 0.35) 55%,
+    black 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 10%,
+    rgba(0, 0, 0, 0.35) 55%,
+    black 100%
+  );
 }
 
 .bg-transition--to-white::after,.company-summary::after { content: ""; position: absolute; inset: 0; background-image: var(--contact-bg);}
