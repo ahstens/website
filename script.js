@@ -730,6 +730,22 @@ window.addEventListener("DOMContentLoaded", () => {
   initShopFilters();
   initShopProducts();
   initFeaturedProducts();
+
+  const caption = document.getElementById('paintingCaption');
+  if (caption) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            caption.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(caption);
+  }
 });
 
 renderCart();
