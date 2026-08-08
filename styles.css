@@ -231,7 +231,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   mask-image: linear-gradient(to bottom, transparent, black 100%);
 }
 
-.bg-transition--to-white::after {background-image: var(--contact-bg); }
+.bg-transition--to-white::after,.company-summary::after { content: ""; position: absolute; inset: 0; background-image: var(--contact-bg);}
 .bg-transition--to-yellow::after { background-image: url("assets/images/yellow.png"); }
 .bg-transition--to-red::after { background-image: url("assets/images/red.png"); }
 
