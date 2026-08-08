@@ -231,14 +231,16 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
     to bottom,
     transparent 0%,
     transparent 10%,
-    rgba(0, 0, 0, 0.35) 55%,
+    rgba(0, 0, 0, 0.1) 30%,
+    rgba(0, 0, 0, 0.45) 60%,
     black 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
     transparent 10%,
-    rgba(0, 0, 0, 0.35) 55%,
+    rgba(0, 0, 0, 0.1) 30%,
+    rgba(0, 0, 0, 0.45) 60%,
     black 100%
   );
 }
