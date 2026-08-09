@@ -272,13 +272,16 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 .painting-image { display: block; width: 100%; height: auto; margin: 0; }
 
 .painting-caption {
+  /* top/left/right are percentages of the painting image's own box (not
+     the viewport), so the caption tracks the image at any zoom level or
+     container width instead of drifting once the image is scaled. */
   position: absolute;
-  top: 200px;
-  left: 250px;
-  right: 20px;
+  top: 18.7%;
+  left: 14.7%;
+  right: 1.2%;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 0.3em;
 }
 
 .caption-line {
@@ -290,24 +293,20 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   transition: opacity var(--caption-duration) ease,
               transform var(--caption-duration) ease;
   /* translateX below is the roll-in distance (travels left -> right into
-     the final resting spot defined by margin-left on each row). */
-  transform: translateX(-140px);
+     the final resting spot defined by margin-left on each row), in vw so
+     the roll distance scales with the (edge-to-edge) image the same way
+     the resting position does. */
+  transform: translateX(-8.2vw);
 }
 
-/* Each row is shifted an additional 100px to the right of the row above it:
-   row 1 = 100px, row 2 = 200px, row 3 = 300px, row 4 = 400px.
+/* Each row is shifted further right than the row above it, as a percentage
+   of the image width so the stagger keeps its proportions at any size.
    All rows use the same --caption-duration; stagger delays are spaced by
    --caption-stagger so they animate in sequence without overlap. */
-.caption-line:nth-child(1) { margin-left: 100px; transition-delay: 0s; }
-.caption-line:nth-child(2) { margin-left: 200px; transition-delay: calc(1 * var(--caption-stagger)); }
-.caption-line:nth-child(3) { margin-left: 300px; transition-delay: calc(2 * var(--caption-stagger)); }
-.caption-line:nth-child(4) { margin-left: 400px; transition-delay: calc(3 * var(--caption-stagger)); }
-
-.painting-caption-trigger {
-  display: block;
-  width: 100%;
-  height: 1px;
-}
+.caption-line:nth-child(1) { margin-left: 5.9%; transition-delay: 0s; }
+.caption-line:nth-child(2) { margin-left: 11.8%; transition-delay: calc(1 * var(--caption-stagger)); }
+.caption-line:nth-child(3) { margin-left: 17.6%; transition-delay: calc(2 * var(--caption-stagger)); }
+.caption-line:nth-child(4) { margin-left: 23.5%; transition-delay: calc(3 * var(--caption-stagger)); }
 
 .painting-caption.is-visible .caption-line {
   opacity: 1;
@@ -596,11 +595,6 @@ footer { padding: 24px 0; }
   .product-description { font-size: 1rem; line-height: 1.65; }
   .product-page { padding: 46px 0 68px; }
   .product-page-inner { padding: 0 16px; }
-  .painting-caption { left: 20px; }
-  .caption-line:nth-child(1) { margin-left: 20px; }
-  .caption-line:nth-child(2) { margin-left: 60px; }
-  .caption-line:nth-child(3) { margin-left: 100px; }
-  .caption-line:nth-child(4) { margin-left: 140px; }
 }
 
 @media (min-width: 1100px) {
