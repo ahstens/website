@@ -731,14 +731,14 @@ window.addEventListener("DOMContentLoaded", () => {
   initShopProducts();
   initFeaturedProducts();
 
-  // Trigger the painting caption's roll-in animation only once the caption's
-  // own bounding box (not the whole image/section) scrolls into the visible
-  // viewport area. Shrinking the bottom edge of the observer's root via
-  // rootMargin means the caption must scroll up past that inset line before
-  // it counts as "intersecting" — so it no longer fires immediately just
-  // because the painting section happens to be visible at page load.
+  // Trigger the painting caption's roll-in animation only once the user has
+  // scrolled to the end of the featured coffee section. Observing a tiny
+  // sentinel placed at the bottom of that section makes the animation fire
+  // when that end point reaches the viewport, which is more stable across
+  // desktop and mobile viewport sizes than watching the caption itself.
   const caption = document.getElementById('paintingCaption');
-  if (caption) {
+  const captionTrigger = document.getElementById('paintingCaptionTrigger');
+  if (caption && captionTrigger) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -750,15 +750,9 @@ window.addEventListener("DOMContentLoaded", () => {
       },
       {
         threshold: 0,
-        // Pulls the bottom of the effective viewport up by 20%, so the
-        // caption only registers as visible once it has scrolled into the
-        // upper ~80% of the screen, rather than the instant any pixel of it
-        // appears at the very bottom edge (which is what caused it to look
-        // like it fired immediately on load).
-        rootMargin: "0px 0px -20% 0px",
       }
     );
-    observer.observe(caption);
+    observer.observe(captionTrigger);
   }
 });
 
