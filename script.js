@@ -731,28 +731,49 @@ window.addEventListener("DOMContentLoaded", () => {
   initShopProducts();
   initFeaturedProducts();
 
-  // Trigger the painting caption's roll-in animation only once the user has
-  // scrolled to the end of the featured coffee section. Observing a tiny
-  // sentinel placed at the bottom of that section makes the animation fire
-  // when that end point reaches the viewport, which is more stable across
-  // desktop and mobile viewport sizes than watching the caption itself.
+  // Trigger the painting caption's roll-in animation only once the entire
+  // featured coffee section has been scrolled fully into view. We observe the
+  // #featured-coffee section itself with threshold: 1 so the animation cannot
+  // start until every pixel of the section is inside the viewport. On viewports
+  // shorter than the section we fall back to requiring the bottom sentinel to
+  // reach the vertical midpoint of the viewport (rootMargin clips the lower
+  // half), which prevents the too-early trigger reported in PR #36.
+  const CAPTION_SECTION_FULLY_VISIBLE_THRESHOLD = 1.0;
+  const CAPTION_FALLBACK_ROOT_MARGIN = '0px 0px -50% 0px';
+
   const caption = document.getElementById('paintingCaption');
+  const captionSection = document.getElementById('featured-coffee');
   const captionTrigger = document.getElementById('paintingCaptionTrigger');
-  if (caption && captionTrigger) {
-    const observer = new IntersectionObserver(
+
+  if (caption && captionSection && captionTrigger) {
+    let observers = [];
+
+    const triggerCaption = () => {
+      caption.classList.add('is-visible');
+      observers.forEach((obs) => obs.disconnect());
+    };
+
+    // Primary observer: fires only when the whole section fits in the viewport.
+    const sectionObserver = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            caption.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
+        entries.forEach((entry) => { if (entry.isIntersecting) triggerCaption(); });
       },
-      {
-        threshold: 0,
-      }
+      { threshold: CAPTION_SECTION_FULLY_VISIBLE_THRESHOLD }
     );
-    observer.observe(captionTrigger);
+
+    // Fallback observer: fires when the bottom sentinel crosses the viewport
+    // midpoint (the lower 50% of the viewport is excluded via rootMargin).
+    // This handles tall sections that never fully fit in the viewport.
+    const fallbackObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) triggerCaption(); });
+      },
+      { rootMargin: CAPTION_FALLBACK_ROOT_MARGIN, threshold: 0 }
+    );
+
+    observers = [sectionObserver, fallbackObserver];
+    sectionObserver.observe(captionSection);
+    fallbackObserver.observe(captionTrigger);
   }
 });
 
