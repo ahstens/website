@@ -282,24 +282,18 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 900;
   opacity: 0;
-  /* Shift each line 100px to the right of its normal position, and start
-     further right so it rolls in from left to right when revealed. */
-  transform: translateX(0px);
-  margin-left: 100px;
   transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-/* Off-screen starting position (pre-reveal): pulled back to the left of the
-   100px offset above, so the roll-in motion travels left -> right. */
-.caption-line {
+  /* translateX below is the roll-in distance (travels left -> right into
+     the final resting spot defined by margin-left on each row). */
   transform: translateX(-140px);
 }
 
-/* One rule per .caption-line span in index.html — update both together if lines are added/removed */
-.caption-line:nth-child(1) { transition-delay: 0s; }
-.caption-line:nth-child(2) { transition-delay: 0.15s; }
-.caption-line:nth-child(3) { transition-delay: 0.3s; }
-.caption-line:nth-child(4) { transition-delay: 0.45s; }
+/* Each row is shifted an additional 100px to the right of the row above it:
+   row 1 = 100px, row 2 = 200px, row 3 = 300px, row 4 = 400px. */
+.caption-line:nth-child(1) { margin-left: 100px; transition-delay: 0s; }
+.caption-line:nth-child(2) { margin-left: 200px; transition-delay: 0.15s; }
+.caption-line:nth-child(3) { margin-left: 300px; transition-delay: 0.3s; }
+.caption-line:nth-child(4) { margin-left: 400px; transition-delay: 0.45s; }
 
 .painting-caption.is-visible .caption-line {
   opacity: 1;
@@ -589,7 +583,10 @@ footer { padding: 24px 0; }
   .product-page { padding: 46px 0 68px; }
   .product-page-inner { padding: 0 16px; }
   .painting-caption { left: 20px; }
-  .caption-line { margin-left: 40px; }
+  .caption-line:nth-child(1) { margin-left: 20px; }
+  .caption-line:nth-child(2) { margin-left: 60px; }
+  .caption-line:nth-child(3) { margin-left: 100px; }
+  .caption-line:nth-child(4) { margin-left: 140px; }
 }
 
 @media (min-width: 1100px) {
