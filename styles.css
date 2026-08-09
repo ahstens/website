@@ -35,6 +35,11 @@ img, video, iframe { max-width: 100%; height: auto; }
   --card-body-padding-top: 18px;
   --card-body-padding-bottom: 22px;
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  /* Caption animation timing — applied uniformly to every .caption-line row.
+     --caption-duration : slide-in duration per row (was 1.8s)
+     --caption-stagger  : additional delay between consecutive rows (was 0.45s) */
+  --caption-duration: 3.2s;
+  --caption-stagger:  1.0s;
 }
 
 body {
@@ -282,18 +287,21 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 900;
   opacity: 0;
-  transition: opacity 1.8s ease, transform 1.8s ease;
+  transition: opacity var(--caption-duration) ease,
+              transform var(--caption-duration) ease;
   /* translateX below is the roll-in distance (travels left -> right into
      the final resting spot defined by margin-left on each row). */
   transform: translateX(-140px);
 }
 
 /* Each row is shifted an additional 100px to the right of the row above it:
-   row 1 = 100px, row 2 = 200px, row 3 = 300px, row 4 = 400px. */
+   row 1 = 100px, row 2 = 200px, row 3 = 300px, row 4 = 400px.
+   All rows use the same --caption-duration; stagger delays are spaced by
+   --caption-stagger so they animate in sequence without overlap. */
 .caption-line:nth-child(1) { margin-left: 100px; transition-delay: 0s; }
-.caption-line:nth-child(2) { margin-left: 200px; transition-delay: 0.45s; }
-.caption-line:nth-child(3) { margin-left: 300px; transition-delay: 0.9s; }
-.caption-line:nth-child(4) { margin-left: 400px; transition-delay: 1.35s; }
+.caption-line:nth-child(2) { margin-left: 200px; transition-delay: calc(1 * var(--caption-stagger)); }
+.caption-line:nth-child(3) { margin-left: 300px; transition-delay: calc(2 * var(--caption-stagger)); }
+.caption-line:nth-child(4) { margin-left: 400px; transition-delay: calc(3 * var(--caption-stagger)); }
 
 .painting-caption-trigger {
   display: block;
