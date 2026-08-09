@@ -268,20 +268,19 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 
 .painting-caption {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 200px;
+  left: 200px;
   right: 20px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .caption-line {
   display: block;
-  color: #fff;
+  color: #6e434d;
   font-size: clamp(1.4rem, 3vw, 2.2rem);
-  font-weight: 700;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  font-weight: 900;
   opacity: 0;
   transform: translateY(-40px);
   transition: opacity 0.6s ease, transform 0.6s ease;
