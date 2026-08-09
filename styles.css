@@ -273,17 +273,26 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
   right: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 .caption-line {
   display: block;
   color: #6e434d;
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 900;
   opacity: 0;
-  transform: translateY(-40px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  /* Shift each line 100px to the right of its normal position, and start
+     further right so it rolls in from left to right when revealed. */
+  transform: translateX(0px);
+  margin-left: 100px;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* Off-screen starting position (pre-reveal): pulled back to the left of the
+   100px offset above, so the roll-in motion travels left -> right. */
+.caption-line {
+  transform: translateX(-140px);
 }
 
 /* One rule per .caption-line span in index.html — update both together if lines are added/removed */
@@ -294,7 +303,7 @@ header, footer, .hero, .section { padding-top: 18px; padding-bottom: 18px; }
 
 .painting-caption.is-visible .caption-line {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0px);
 }
 
 .company-summary { background: var(--summary-bg); padding: 70px 0; margin-top: 0; }
@@ -547,6 +556,10 @@ footer { padding: 24px 0; }
     opacity: 1 !important;
     transform: none !important;
   }
+
+  .caption-line {
+    transition: none !important;
+  }
 }
 
 @media (max-width: 900px) {
@@ -575,6 +588,8 @@ footer { padding: 24px 0; }
   .product-description { font-size: 1rem; line-height: 1.65; }
   .product-page { padding: 46px 0 68px; }
   .product-page-inner { padding: 0 16px; }
+  .painting-caption { left: 20px; }
+  .caption-line { margin-left: 40px; }
 }
 
 @media (min-width: 1100px) {
